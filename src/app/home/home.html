@@ -1,0 +1,54 @@
+<div class="home-container">
+
+  <div class="hero-section">
+  <div class="hero-content">
+    <h1>CS:GO Skin Market</h1>
+    <p>Encuentra skins raras y exclusivas al mejor precio.</p>
+  </div>
+  </div>
+  <h2 class="section-title">🔥 Destacados</h2>
+
+  <app-carousel
+    [productos]="productosDestacados"
+    (productoAgregadoCarousel)="onAgregarProducto($event)">
+  </app-carousel>
+
+  <app-product-row
+    titulo="Rifles Populares"
+    [productos]="productosRifles"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
+    titulo="Cuchillos Exclusivos"
+    [productos]="productosCuchillos"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
+    titulo="🧤 Guantes Raros"
+    [productos]="productosGuantes"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
+    titulo="👤 Agentes (Skins)"
+    [productos]="productosAgentes"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+
+  <div class="ver-todos-container">
+  <h3 class="cta-title">¿Buscas algo más?</h3>
+    <p-button
+      label="Ver todos los productos"
+      (click)="verTodosLosProductos()"
+      size="large"
+      severity="success"
+      icon="pi pi-th-large"
+      iconPos="right"
+      styleClass="cta-button">
+    </p-button>
+  </div>
+
+</div>

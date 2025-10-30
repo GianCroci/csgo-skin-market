@@ -1,0 +1,12 @@
+<div class="row-container">
+  <h2>{{ titulo }}</h2>
+
+  <div class="product-list">
+    @for (prod of productos; track prod.id) {
+      <app-product-card
+        [producto]="prod"
+        (productoAgregado)="onProductoAgregado($event)">
+      </app-product-card>
+    }
+  </div>
+</div>

@@ -1,0 +1,115 @@
+/* Estilo para el Hero Banner */
+.hero-section {
+  height: 40vh; /* 40% de la altura de la pantalla */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/csgo-banner.png'); /* CAMBIA 'csgo-banner.jpg' por tu imagen */
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 3rem; /* Espacio para separar del carrusel */
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* Sombra para que se lea bien */
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: #ccc; /* Un color gris claro */
+}
+
+/* Estilo para los títulos de sección (ej. "Destacados") */
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #4ade80; /* Línea verde (como el precio) */
+  padding-bottom: 0.5rem;
+  display: inline-block; /* Para que el borde no ocupe todo el ancho */
+}
+
+/* Espacio entre las filas de productos */
+app-product-row {
+  display: block; /* Necesario para que el margin funcione */
+  margin-bottom: 2rem;
+}
+
+
+/* La "barra" contenedora para tu botón principal */
+.ver-todos-container {
+  display: flex;
+  justify-content: center; /* ¡Centra el botón horizontalmente! */
+  align-items: center;
+  width: 100%;
+
+  /* Espacio para separarlo de las filas de productos */
+  padding: 3rem 0;
+  margin-top: 2rem;
+
+  /* Una línea superior sutil para darle su propio espacio */
+  border-top: 1px solid #4b5563; /* Un gris de tu tema oscuro */
+}
+
+
+/* 1. La "caja" contenedora del botón */
+.ver-todos-container {
+  display: flex;
+  flex-direction: column; /* Pone el título arriba y el botón abajo */
+  justify-content: center;
+  align-items: center; /* Centra todo */
+  width: 100%;
+
+  padding: 3rem 1.5rem;
+  margin-top: 3rem;
+
+  /* Estilos para destacar la "caja" */
+  background-color: #2a2a2e; /* El mismo gris oscuro del carrusel */
+  border-radius: 12px;
+  border: 1px solid #4ade80; /* Un borde verde "gamer" */
+}
+
+/* 2. El título que acabamos de agregar */
+.cta-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  padding-bottom: 1.5rem;
+}
+
+/* 3. Hacemos el botón MÁS GRANDE y lo ANIMAMOS
+  Usamos ::ng-deep para anular los estilos de PrimeNG
+*/
+:host ::ng-deep .cta-button {
+  /* Hacemos el botón más grande que "large" */
+  padding: 1rem 2rem !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+
+  /* Animación de "pulso" para llamar la atención */
+  animation: pulse-animation 2s infinite;
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); /* Sombra inicial */
+}
+
+/* 4. Definición de la animación */
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px rgba(74, 222, 128, 0); /* La sombra se expande y desaparece */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}

@@ -1,0 +1,18 @@
+/* Usamos el styleClass="product-card" que definimos en el HTML */
+.product-card {
+  width: 300px;  /* ¡Dale un ancho fijo a las tarjetas! */
+  flex-shrink: 0; /* Evita que la tarjeta se "encoja" en la fila flex */
+}
+
+.product-image {
+  width: 100%;           /* La imagen ocupa el 100% de la tarjeta */
+  height: 180px;         /* Le damos una altura fija */
+  object-fit: cover;   /* Evita que la imagen se deforme */
+  border-radius: 8px;  /* Bordes redondeados para la imagen */
+}
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #4ade80; /* Un color verde "gamer" para el precio */
+}

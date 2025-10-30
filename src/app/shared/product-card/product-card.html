@@ -1,0 +1,20 @@
+<p-card [header]="producto.nombre" [subheader]="producto.clasificacion" styleClass="product-card">
+
+  <ng-template pTemplate="header">
+    <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="product-image">
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <p class="product-price">
+      {{ producto.precio | currency:'USD':'symbol':'1.2-2' }}
+    </p>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Agregar al carrito"
+      icon="pi pi-shopping-cart"
+      (click)="agregarAlCarrito()">
+    </p-button>
+  </ng-template>
+</p-card>
