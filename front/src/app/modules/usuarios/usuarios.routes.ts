@@ -6,6 +6,7 @@ import { UpdateUsuarioComponent } from './pages/update-usuario/update-usuario.co
 import { ListPedidosComponent } from './pages/list-mis-pedidos/list-mis-pedidos';
 import { ListDetallePedido } from './pages/list-detalle-pedido/list-detalle-pedido';
 
+
 export const usuariosRoutes: Routes = [
 
     {
@@ -24,6 +25,7 @@ export const usuariosRoutes: Routes = [
                 component : UpdateUsuarioComponent
             },
             {
+<<<<<<< HEAD
                 path : 'list-mis-pedidos',
                 component : ListPedidosComponent
             },
@@ -32,10 +34,16 @@ export const usuariosRoutes: Routes = [
               component: ListDetallePedido
             },
             {
+=======
+>>>>>>> e49316a (first commit)
                 path : '**',
                 redirectTo : 'list-usuarios'
             }
         ]
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> e49316a (first commit)
 ];
