@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { RouterModule } from '@angular/router';
@@ -51,9 +52,15 @@ export class Navbar {
 =======
 >>>>>>> e49316a (first commit)
             label: 'Cerrar Sesión',
-            icon: 'pi pi-sign-out'
+            icon: 'pi pi-sign-out',
+            routerLink: '/carrito'
           }
         ]
+      },
+      {
+        label: 'New',
+        icon: 'pi pi-plus',
+        routerLink: '/usuarios/create-usuario'
       }
     ];
   }

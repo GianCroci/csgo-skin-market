@@ -1,5 +1,6 @@
 import type { Usuario } from "../models/usuario.model.js";
 import type { UsuarioRepository } from "../repository/usuario.repository.js";
+import * as bcrypt from 'bcrypt';
 
 export class UsuarioService {
 
@@ -13,15 +14,35 @@ export class UsuarioService {
         return await this.usuarioRepository.findUsuarioById(id);
     }
 
-    async crearUsuario(usuario:Usuario){
-        const {nombre, apellido, mail, password, token, rol, verificado} = usuario;
+    async crearUsuario(usuarioData:Usuario){
+        const {nombre, apellido, mail, password} = usuarioData;
 
-        console.log(nombre);
-        if(!nombre || typeof nombre !== 'string'){
-            throw new Error('El nombre es obligatorio y debe ser un string')
-        }
+
+        if (!nombre) throw new Error('Nombre es requerido');
+        if (!apellido) throw new Error('Apellido es requerido');
+        if (!mail) throw new Error('Mail es requerido');
+        if (!password || password.length < 6) {
+            throw new Error('Password debe tener al menos 6 caracteres');
+  }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const usuario = {
+            nombre: nombre,
+            apellido: apellido,
+            mail: mail,
+            password: hashedPassword,
+            rol: 'usuario',
+            verificado: false,
+            fechaIngreso: new Date()
+        };
+
+        const usuarioCreado = await this.usuarioRepository.createUsuario(usuario);
+
+            
       
-        return await this.usuarioRepository.createUsuario(usuario)
+        return usuarioCreado;
     }
 
    /* async actualizarUsuario(id:number, data: {nombre?:string,id_empresa?:number}){
