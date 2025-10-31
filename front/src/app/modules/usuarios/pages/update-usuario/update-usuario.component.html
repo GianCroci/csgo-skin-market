@@ -1,0 +1,15 @@
+
+<div class="row">
+  <div class="col">
+    <h1>Actualizar usuario</h1>
+  </div>
+  <div class="col text-end">
+    <p-button icon="pi pi-undo" [routerLink]="[`/usuarios/list-usuarios`]"></p-button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-form-usuario [usuario]="usuario" (eventEmitterFormUsuario)="actualizarUsuario($event)"></app-form-usuario>
+  </div>
+</div>

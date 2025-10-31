@@ -1,0 +1,40 @@
+<p-table [value]="usuarios()" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template #header>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Empresa</th>
+      <th>Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template #caption>
+    <div class="row">
+      <div class="col text-end">
+        <p-button icon="pi pi-plus" (onClick)="createUsuario()"></p-button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #body let-usuario>
+    <tr>
+      <td>{{ usuario.id }}</td>
+      <td>{{ usuario.nombre }}</td>
+      <td>{{ usuario.empresa?.nombre || "No tiene una empresa"}}</td>
+      <td>
+        <div class="row">
+          <div class="col">
+            <p-button (onClick)="editarUsuario(usuario)" icon="pi pi-pencil"> </p-button>
+          </div>
+          <div class="col">
+            <p-button (onClick)="verUsuario(usuario)" icon="pi pi-eye"> </p-button>
+          </div>
+          <div class="col">
+            <p-button (onClick)="eliminarUsuario(usuario)" icon="pi pi-trash"> </p-button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template #emptymessage>
+    <p>No existe ningún usuario pa</p>
+  </ng-template>
+</p-table>
