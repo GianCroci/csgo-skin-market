@@ -5,8 +5,8 @@ export interface Usuario {
   mail: string;
   password: string;
   token?: string;
-  rol: string;
-  verificado: boolean;
-  fechaIngreso: Date;
+  rol?: string;
+  verificado?: boolean;
+  fechaIngreso?: Date;
 }
 

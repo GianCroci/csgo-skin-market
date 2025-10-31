@@ -1,29 +1,32 @@
-<form [formGroup]="form" (ngSubmit)="sendUsuario()" autocomplete="off">
-  <div class="row">
-    <div class="col">
-      <label for="nombre">Nombre:</label>
-      <input
-        type="text"
-        formControlName="nombre"
-        id="nombre"
-        pInputText
-        [style]="{ width: '100%' }"
-      />
-      @if(form.get('nombre')?.hasError('required') && form.get('nombre')?.touched){
-      <span class="text-danger">Este campo es obligatorio</span>
-      }
+<form [formGroup]="form" method="post" (ngSubmit)="sendUsuario()" class="flex flex-col gap-4 w-full sm:w-56">
+    <div class="flex flex-col gap-1">
+        <input pInputText type="text" id="nombre" placeholder="Nombre" formControlName="nombre" [invalid]="isInvalid('nombre')" />
+        @if (isInvalid('nombre')) {
+            <p-message severity="error" size="small" variant="simple">Nombre es requerido.</p-message>
+        }
     </div>
-  </div>
-
-  <div class="row mt-3 text-center">
-    <div class="col">
-      <p-button
-        type="submit"
-        [disabled]="form.invalid"
-        [label]="title"
-        [rounded]="true"
-        severity="success"
-      ></p-button>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="text" id="apellido" placeholder="Apellido" formControlName="apellido" [invalid]="isInvalid('apellido')" />
+        @if (isInvalid('apellido')) {
+            <p-message severity="error" size="small" variant="simple">Apellido es requerido.</p-message>
+        }
     </div>
-  </div>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="mail" id="mail" placeholder="Mail" formControlName="mail" [invalid]="isInvalid('mail')" />
+        @if (isInvalid('mail')) {
+            @if (form.get('mail')?.errors?.['required']) {
+                <p-message severity="error" size="small" variant="simple">Email is required.</p-message>
+            }
+            @if (form.get('mail')?.errors?.['email']) {
+                <p-message severity="error" size="small" variant="simple">Please enter a valid email.</p-message>
+            }
+        }
+    </div>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="password" id="password" placeholder="Contraseña" formControlName="password" [invalid]="isInvalid('password')" />
+        @if (isInvalid('password')) {
+            <p-message severity="error" size="small" variant="simple">Contraseña es requerida.</p-message>
+        }
+    </div>
+    <button pButton severity="secondary" type="submit"><span pButtonLabel>Registrarme</span></button>
 </form>
