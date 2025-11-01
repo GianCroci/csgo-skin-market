@@ -30,6 +30,10 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${environment.api_url}/usuario/${id}`);
   }
 
+  existeMail(mail: string): Observable<boolean>{
+    return this.http.get<boolean>(`${environment.api_url}/usuario/${mail}`);
+  }
+
   createUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${environment.api_url}/usuario/`, usuario);
   }
