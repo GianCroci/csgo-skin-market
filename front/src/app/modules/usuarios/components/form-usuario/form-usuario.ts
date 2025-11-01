@@ -8,6 +8,7 @@ import { UsuariosService } from '../../../../api/services/usuarios/usuarios.serv
 //import { Usuario } from '../../interfaces/usuario.interface;
 import { Usuario } from "../../interfaces/usuario.interface"
 import { Message } from 'primeng/message';
+import { CheckEmail } from '../../../../api/services/usuarios/validators/check-email';
 
 @Component({
   selector: 'app-form-usuario',
@@ -23,11 +24,13 @@ export class FormUsuario {
 
   router = inject(Router);
 
+  checkEmail = inject(CheckEmail);
+
   form!: FormGroup;
 
   usuarioService = inject(UsuariosService);
 
-  
+  existeUsuario: boolean = false;
 
   usuario = input<Usuario>();
 
@@ -39,35 +42,22 @@ export class FormUsuario {
       nombre: [this.usuario()?.nombre, [Validators.required]],
       apellido: [this.usuario()?.nombre, [Validators.required]],
       mail: [this.usuario()?.mail, [Validators.required, Validators.email]], 
-      password: [this.usuario()?.nombre, [Validators.required]]
+      password: [this.usuario()?.nombre, [Validators.required, Validators.minLength(6)]]
     });
 
   }
     isInvalid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
     return !!(field?.invalid && field?.touched);
-  }
-  
+  }  
 
   ngOnDestroy(): void {}
 
   sendUsuario() {
 
-    console.log('🔥 sendUsuario ejecutado');
-  console.log('Form valid:', this.form.valid);
-  console.log('Form value:', this.form.value);
-
-  if (this.form.invalid) {
-    console.log('❌ Formulario inválido');
-    console.log('Errores:', this.form.errors);
-    Object.keys(this.form.controls).forEach(key => {
-      const control = this.form.get(key);
-      if (control?.invalid) {
-        console.log(`Campo ${key} inválido:`, control.errors);
+    if(this.checkEmail.existeMail(this.form.get('mail')?.value) == true){
+        this.existeUsuario = true;
       }
-    });
-    return;  // ← Detén la ejecución si es inválido
-  }
 
     const usuario: Usuario = {
       nombre: this.form.get('nombre')?.value,

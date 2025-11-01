@@ -14,6 +14,14 @@ export class UsuarioService {
         return await this.usuarioRepository.findUsuarioById(id);
     }
 
+    async existeMail(mail: string){
+        const existe = await this.usuarioRepository.findUsuarioByMail(mail);
+        if(existe){
+            return true;
+        }
+        return false;
+    }
+
     async crearUsuario(usuarioData:Usuario){
         const {nombre, apellido, mail, password} = usuarioData;
 
@@ -39,9 +47,7 @@ export class UsuarioService {
         };
 
         const usuarioCreado = await this.usuarioRepository.createUsuario(usuario);
-
-            
-      
+    
         return usuarioCreado;
     }
 

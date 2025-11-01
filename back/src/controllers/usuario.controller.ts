@@ -45,6 +45,29 @@ export class UsuarioController {
         }
     }
 
+    public existeMail = async (req: Request, res: Response) => {
+
+        try {
+            const mail = String(req.params.mail);
+
+            const existeMail = await usuarioService.existeMail(mail);
+
+            if (!existeMail) {
+                
+                 res.status(200).json(existeMail);
+                 return false;
+            }
+            
+            res.status(404).json({ message: 'El mail ya esta registrado' })
+            return true
+           
+
+
+        } catch (error) {
+            res.status(500).json({ message: "No se pudo obtener el usuario", error })
+        }
+    }
+
     public crearUsuario = async (req: Request, res: Response) => {
         try {
             const newUsuario:Usuario = req.body
