@@ -1,0 +1,23 @@
+<h1 class="title">Mi cuenta</h1>
+<h2 class="subtitle">Mis Órdenes</h2>
+
+<p-dataView [value]="ordenes" layout="grid" class="orders-grid">
+  <ng-template let-orden pTemplate="gridItem">
+    <p-card class="order-card" [header]="'Orden: #' + orden.id" [subheader]="orden.fecha">
+      <div class="info-line"><i class="pi pi-info-circle"></i> <strong>Estado:</strong> {{ orden.estado }}</div>
+      <div class="info-line"><i class="pi pi-credit-card"></i> <strong>Pago:</strong> {{ orden.pago }}</div>
+      <div class="info-line"><i class="pi pi-truck"></i> <strong>Envío:</strong> {{ orden.envio }}</div>
+
+      <p class="total">Total ${{ orden.total | number:'1.2-2' }}</p>
+
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          label="SEGUÍ TU ORDEN"
+          class="follow-btn"
+          [routerLink]="['/orden', orden.id]">
+        </button>
+      </ng-template>
+    </p-card>
+  </ng-template>
+</p-dataView>
