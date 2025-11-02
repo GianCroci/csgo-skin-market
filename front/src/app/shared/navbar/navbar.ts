@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, MenubarModule],
+  imports: [CommonModule, MenubarModule, RouterModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -30,10 +31,15 @@ export class Navbar {
       {
         label: 'Perfil',
         icon: 'pi pi-user',
-        items: [ // Sub-menú
+        items: [
           {
             label: 'Mi Cuenta',
             icon: 'pi pi-user-edit'
+          },
+          {
+            label: 'Mis Pedidos',
+            icon: 'pi pi-list',
+            routerLink: '/usuarios/list-mis-pedidos'
           },
           {
             label: 'Cerrar Sesión',
