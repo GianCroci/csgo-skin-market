@@ -19,3 +19,41 @@ model usuario {
 
   @@map("usuario")
 }
+
+model armas {
+  id_arma     Int                 @id @default(autoincrement())
+  nombre_arma String              @unique @db.VarChar(100)
+  categoria   tipo_categoria_arma
+  skins       skins[]
+}
+
+model skins {
+  id_skin      Int         @id @default(autoincrement())
+  nombre_skin  String      @db.VarChar(150)
+  id_arma_base Int
+  rareza       tipo_rareza
+  precio       Decimal     @default(0.00) @db.Decimal(10, 2)
+  url_imagen   String      @db.VarChar(255)
+  armas        armas       @relation(fields: [id_arma_base], references: [id_arma], onDelete: Cascade, onUpdate: NoAction, map: "fk_arma")
+
+  @@unique([id_arma_base, nombre_skin])
+}
+
+enum tipo_categoria_arma {
+  Rifle
+  Pistola
+  Cuchillo
+  Guantes
+  SMG
+  Escopeta
+}
+
+enum tipo_rareza {
+  Com_n       @map("Común")
+  No_com_n    @map("No común")
+  Rara
+  M_tica      @map("Mítica")
+  Legendaria
+  Antigua
+  Contrabando
+}
