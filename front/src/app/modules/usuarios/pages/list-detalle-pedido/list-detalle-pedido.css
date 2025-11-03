@@ -1,0 +1,7 @@
+.responsive-img {
+  width: 100%;
+  max-width: 120px; /* Tamaño máximo deseado */
+  height: auto; /* Mantiene proporción */
+  object-fit: contain; /* Si querés que escale sin recortar */
+  border-radius: 8px;
+}
