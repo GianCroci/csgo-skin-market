@@ -5,8 +5,8 @@
     <ng-template #list let-items>
       <div class="grid grid-cols-12 gap-4 grid-nogutter">
         <p-card *ngFor="let item of items" class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 p-2 m-0">
-          <ng-template pTemplate="header">
-            Orden #{{ item.id }}
+          <ng-template #title>
+              Orden #{{ item.id }}
           </ng-template>
           <div>
             Fecha: {{ item.fecha }}
@@ -20,7 +20,12 @@
           <ng-template pTemplate="footer">
             <div class="flex gap-4 mt-1">
               <button pButton label="Cancelar" type="button" class="p-button-outlined p-button-secondary w-full"></button>
-              <button pButton label="Ver detalle" type="button" class="w-full"></button>
+              <button
+              pButton label="Ver detalle"
+              type="button"
+              class="w-full"
+              [routerLink]="['/usuarios/orden', item.id]">
+              </button>
             </div>
           </ng-template>
         </p-card>
@@ -28,71 +33,3 @@
     </ng-template>
 </p-dataview>
 
-<!-- FEO PERO FUNCIONA
-<p-dataview #dv [value]="ordenes">
-    <ng-template #list let-items>
-        <div class="grid grid-cols-12 gap-4 grid-nogutter">
-            <div class="col-span-12" *ngFor="let item of ordenes; let first = first">
-                <div
-                    class="flex flex-col sm:flex-row sm:ordenes-center p-6 gap-4"
-                    [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }"
-                >
-                    <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
-                        <div class="flex flex-row md:flex-col justify-between items-start gap-2">
-                            <div>
-                                <span class="font-medium text-secondary text-sm">{{ item.envio }}</span>
-                                <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{ item.estado }}</div>
-                            </div>
-                            <div class="bg-surface-100 dark:bg-surface-700 p-1" style="border-radius: 30px">
-                                <div
-                                    class="bg-surface-0 dark:bg-surface-900 flex items-center gap-2 justify-center py-1 px-2"
-                                    style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)"
-                                >
-                                    <span class="text-surface-900 dark:text-surface-0 font-medium text-sm">{{
-                                        item.total
-                                    }}</span>
-                                    <i class="pi pi-star-fill text-yellow-500"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:items-end gap-8">
-                            <span class="text-xl font-semibold text-surface-900 dark:text-surface-0">{{
-                                '$' + item.total
-                            }}</span>
-                            <div class="flex flex-row-reverse md:flex-row gap-2">
-                                <p-button icon="pi pi-heart" [outlined]="true" />
-                                <p-button
-                                    icon="pi pi-shopping-cart"
-                                    class="flex-auto md:flex-initial whitespace-nowrap"
-                                    label="Buy Now"
-                                    [disabled]="item.estado === 'OUTOFSTOCK'"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-</p-dataview>
--->
-
-
-<!--
-<p-dataView [value]="ordenes" layout="grid" class="orders-grid">
-  <ng-template let-orden pTemplate="gridItem">
-    <p-card class="order-card" [header]="'Orden: #' + orden.id" [subheader]="orden.fecha">
-
-      <div class="info-line"><strong>Estado:</strong> {{ orden.estado }}</div>
-      <div class="info-line"><strong>Pago:</strong> {{ orden.pago }}</div>
-      <div class="info-line"><strong>Envío:</strong> {{ orden.envio }}</div>
-
-      <p class="total">Total ${{ orden.total | number:'1.2-2' }}</p>
-
-
-
-    </p-card>
-  </ng-template>
-</p-dataView>
-
--->

@@ -23,5 +23,6 @@ export class ListPedidosComponent {
 
   constructor() {
   console.log('ordenes:', this.ordenes);
-}
+  }
+
 }
