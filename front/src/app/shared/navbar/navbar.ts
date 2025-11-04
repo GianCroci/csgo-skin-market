@@ -15,13 +15,13 @@ import { AuthService } from '../../api/services/auth.service';
 })
 export class Navbar {
 
-  private authService = inject(AuthService); 
+  private authService = inject(AuthService);
   private router = inject(Router);
-  
+
 
   items = computed<MenuItem[]>(() => {
     const isLogged = this.authService.isAuthenticated();
-    
+
     const baseItems: MenuItem[] = [
       {
         label: 'Home',
@@ -31,7 +31,7 @@ export class Navbar {
       {
         label: 'Carrito',
         icon: 'pi pi-shopping-cart',
-        routerLink: '/carrito'
+        routerLink: '/usuarios/carrito-usuario'
       }
     ];
 
@@ -77,6 +77,6 @@ export class Navbar {
   });
 
   logout(): void {
-    this.authService.logout(); 
+    this.authService.logout();
   }
 }
