@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../api/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,12 +15,14 @@ import { RouterModule } from '@angular/router';
 })
 export class Navbar {
 
-  items: MenuItem[] = []; // Array para guardar los items del menú
+  private authService = inject(AuthService); 
+  private router = inject(Router);
+  
 
-  ngOnInit() {
-    // Definimos la estructura del menú
-    // (Aún no tenemos las rutas, pero las dejamos listas)
-    this.items = [
+  items = computed<MenuItem[]>(() => {
+    const isLogged = this.authService.isAuthenticated();
+    
+    const baseItems: MenuItem[] = [
       {
         label: 'Home',
         icon: 'pi pi-home',
@@ -29,39 +32,51 @@ export class Navbar {
         label: 'Carrito',
         icon: 'pi pi-shopping-cart',
         routerLink: '/carrito'
-      },
-      {
+      }
+    ];
+
+    // ✅ Agregar items según estado de autenticación
+    if (isLogged) {
+      baseItems.push({
         label: 'Perfil',
         icon: 'pi pi-user',
-<<<<<<< HEAD
         items: [
-=======
-        items: [ // Sub-menú
->>>>>>> e49316a (first commit)
           {
             label: 'Mi Cuenta',
-            icon: 'pi pi-user-edit'
+            icon: 'pi pi-user-edit',
+            routerLink: '/usuarios/mi-cuenta'
           },
           {
-<<<<<<< HEAD
             label: 'Mis Pedidos',
             icon: 'pi pi-list',
             routerLink: '/usuarios/list-mis-pedidos'
           },
           {
-=======
->>>>>>> e49316a (first commit)
             label: 'Cerrar Sesión',
             icon: 'pi pi-sign-out',
-            routerLink: '/carrito'
+            command: () => this.logout()
           }
         ]
-      },
-      {
-        label: 'New',
-        icon: 'pi pi-plus',
-        routerLink: '/usuarios/create-usuario'
-      }
-    ];
+      });
+    } else {
+      baseItems.push(
+        {
+          label: 'Iniciar Sesión',
+          icon: 'pi pi-sign-in',
+          routerLink: '/login'
+        },
+        {
+          label: 'Registrarse',
+          icon: 'pi pi-user-plus',
+          routerLink: '/usuarios/create-usuario'
+        }
+      );
+    }
+
+    return baseItems;
+  });
+
+  logout(): void {
+    this.authService.logout(); 
   }
 }

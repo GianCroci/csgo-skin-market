@@ -48,7 +48,7 @@ export class UsuariosService {
   }
 
   login(mail:string, password:string){
-    return this.http.post<Usuario>(`${environment.api_url}/usuario/login/`, {mail, password});
+    return this.http.post<Usuario>(`${environment.api_url}/usuario/login`, {mail, password});
   }
 
 }

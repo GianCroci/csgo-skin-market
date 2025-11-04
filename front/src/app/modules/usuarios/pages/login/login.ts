@@ -7,6 +7,7 @@ import { Select } from 'primeng/select';
 import { Message } from 'primeng/message';
 import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
 import { Usuario } from '../../interfaces/usuario.interface';
+import { AuthService } from '../../../../api/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,13 @@ export class Login {
 
   form!: FormGroup;
 
-  usuariosServices = inject(UsuariosService);
+  authService = inject(AuthService);
 
   existeUsuario = input<boolean>();
 
   usuario = input<Usuario>();
+
+  
 
  
 
@@ -45,17 +48,23 @@ export class Login {
 
   ngOnDestroy(): void {}
 
-  login(mail: string, password: string) {
-    this.usuariosServices.login(mail, password).subscribe({
-      next: (data: Usuario) => {
-        console.log('se registro correctamente es usuario con mail: ' + data.mail);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        this.router.navigate(['/home']);
-      },
-    });
+  login(): void {
+    if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+    const {mail, password} = this.form.value;
+    this.authService.login(mail, password).subscribe({
+    next: () => {
+      
+      this.router.navigate(['/home']);
+    },
+    error: (error) => {
+      
+      console.log(error);
+    }
+  });
+}
+
+
 }
