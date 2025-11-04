@@ -1,6 +1,7 @@
 // src/app/services/auth.service.ts
 import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
 import { tap, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -55,7 +56,7 @@ export class AuthService {
 
   // Login
   login(mail: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { mail, password })
+    return this.http.post<LoginResponse>(`${environment.api_url}/usuario/login`, {mail, password})
       .pipe(
         tap(response => {
           if (response.success && response.token) {

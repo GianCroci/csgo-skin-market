@@ -6,6 +6,7 @@ import { ListPedidosComponent } from './pages/list-mis-pedidos/list-mis-pedidos'
 import { ListDetallePedido } from './pages/list-detalle-pedido/list-detalle-pedido';
 import { VerificarMail } from './pages/verificar-mail/verificar-mail';
 import { Login } from './pages/login/login';
+import { authGuard } from '../../api/guards/auth.guard';
 
 
 export const usuariosRoutes: Routes = [
@@ -20,22 +21,21 @@ export const usuariosRoutes: Routes = [
             },
             {
                 path : 'update-usuario/:id',
-                component : UpdateUsuarioComponent
+                component : UpdateUsuarioComponent,
+                canActivate: [authGuard]
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 path : 'list-mis-pedidos',
-                component : ListPedidosComponent
+                component : ListPedidosComponent,
+                canActivate: [authGuard]
             },
             {
               path: 'orden/:id',
-              component: ListDetallePedido
+              component: ListDetallePedido,
+              canActivate: [authGuard]
             },
             {
-=======
->>>>>>> e49316a (first commit)
-=======
+
                 path : 'verificar-mail/:token',
                 component : VerificarMail
             },
@@ -44,15 +44,11 @@ export const usuariosRoutes: Routes = [
                 component : Login
             },
             {
->>>>>>> c5d35b3 (login)
+               
                 path : '**',
                 redirectTo : 'list-usuarios'
             }
         ]
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> e49316a (first commit)
 ];
