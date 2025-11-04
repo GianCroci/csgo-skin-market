@@ -3,10 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
 import { ProductCard } from '../../../shared/product-card/product-card';
+import { Skins } from "../../../modules/usuarios/components/skins/skins";
 
 @Component({
   selector: 'app-carousel',
-  imports: [CommonModule, CarouselModule, ProductCard],
+  imports: [CommonModule, CarouselModule, ProductCard, Skins],
   templateUrl: './carousel.html',
   styleUrl: './carousel.css',
 })
