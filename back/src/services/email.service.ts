@@ -34,21 +34,3 @@ try {
 }
 
 }
-
-/*const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "giancroci5@gmail.com",
-    pass: process.env.GOOGLE_APP_PASSWORD
-  },
-});
-
-var message = {
-  from: "giancroci5@gmail.com",
-  to: "giancroci5@gmail.com",
-  subject: "Prueba nodemailer",
-  text: "Plaintext version of the message",
-  html: "<p>HTML version of the message</p>",
-};
-
-transporter.sendMail(message)*/

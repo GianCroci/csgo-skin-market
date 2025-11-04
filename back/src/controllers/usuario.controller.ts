@@ -103,13 +103,39 @@ export class UsuarioController {
     }
 
     public login = async (req: Request, res: Response) => {
-        const mail = String(req.body.mail);
-        const password = String(req.body.password);
+        
         try {
+            const {mail, password} = req.body;
+            if(!mail || !password){
+                return res.status(400).json({ 
+                    error: 'Mail y password son requeridos' 
+                });
+            }        
             const usuarioLogeado = await usuarioService.login(mail, password)
-            res.status(200).json({message: "Logeado"});
-        } catch (error) {
-            res.status(500).json({ message: "No se pudo logear", error })
+            return res.status(200).json({
+                success: true,
+                token: usuarioLogeado.token,
+                usuario: usuarioLogeado.usuario
+            });
+        } catch (error:any) {
+            console.error('Error en login:', error);
+            
+            if (error.message === 'Usuario no encontrado' || 
+                error.message === 'Contraseña incorrecta') {
+                return res.status(401).json({ 
+                    error: 'Credenciales inválidas' 
+                });
+            }
+            
+            if (error.message === 'Usuario no verificado') {
+                return res.status(403).json({ 
+                    error: 'Por favor verifica tu email antes de iniciar sesión' 
+                });
+            }
+
+            return res.status(500).json({ 
+                error: 'Error en el servidor' 
+            });
         }
     }
 

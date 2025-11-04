@@ -2,13 +2,21 @@ import type { Usuario } from "../models/usuario.model.js";
 import type { UsuarioRepository } from "../repository/usuario.repository.js";
 import * as bcrypt from 'bcrypt';
 import { EmailService } from "./email.service.js";
+import jwt from 'jsonwebtoken';
 
 export class UsuarioService {
 
     private emailService: EmailService;
+    private JWT_SECRET : string;
 
     constructor(private usuarioRepository:UsuarioRepository){
         this.emailService = new EmailService;
+
+        if (!process.env.JWT_SECRET) {
+            throw new Error('JWT_SECRET no está definido en las variables de entorno');
+        }
+        
+        this.JWT_SECRET = process.env.JWT_SECRET;
     }
 
     async obtenerUsuarios(){
@@ -95,11 +103,36 @@ export class UsuarioService {
         throw new Error('Contraseña incorrecta');
         }
 
-        if (!usuario.verificado==true){
+        if (!usuario.verificado){
             throw new Error('Usuario no verificado');
         }
 
-        return usuario;
+        const token = jwt.sign(
+            { 
+                id_usuario: usuario.id_usuario,
+                mail: usuario.mail,
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                rol: usuario.rol
+            },
+            this.JWT_SECRET,
+            { expiresIn: '24h' } // Token expira en 24 horas
+        );
+
+        // Retornar usuario Y token
+        return {
+            token,
+            usuario: {
+                id: usuario.id_usuario,
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                mail: usuario.mail,
+                rol: usuario.rol
+            }
+
+
+        
     }
 
+    }
 }

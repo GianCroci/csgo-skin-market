@@ -15,7 +15,6 @@ import { Usuario } from '../../interfaces/usuario.interface';
   styleUrl: './login.css',
 })
 export class Login {
-title:string = "Crear Usuario";
 
   private fb = inject(FormBuilder);
 
