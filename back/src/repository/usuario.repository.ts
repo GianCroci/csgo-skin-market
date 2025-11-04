@@ -1,3 +1,4 @@
+import {type usuario } from './../../node_modules/.prisma/client/index.js';
 import type { Usuario } from "../models/usuario.model.js";
 import { prisma } from "../prisma.js";
 
@@ -15,30 +16,46 @@ export class UsuarioRepository{
         )
     }
 
+    async findUsuarioByMail(mail: string){
+        return await prisma.usuario.findUnique(
+            {
+                where: {mail : mail}
+            }
+        )
+    }
+
     async createUsuario(usuario : Usuario){
         return await prisma.usuario.create({
             data: {
-            nombre: usuario.nombre,
-            apellido: usuario.apellido,
-            mail: usuario.mail,
-            password: usuario.password,
-            token: usuario.token,
-            rol: usuario.rol,
-            verificado: usuario.verificado
+            nombre: usuario.nombre!,
+            apellido: usuario.apellido!,
+            mail: usuario.mail!,
+            password: usuario.password!,
+            token: usuario.token!,
+            rol: usuario.rol!,
+            verificado: usuario.verificado!
         }
         })
     }
 
-    async updateUsuario(id:number,  usuario : Usuario){
+    async updateUsuario(id_usuario:number,  usuario : Usuario){
         return await prisma.usuario.update({
-            where : {id},
-            usuario
+            where : {id_usuario},
+            data : usuario
         })
     }
 
     async deleteUsuario(id:number){
         return await prisma.usuario.delete({
-            where : {id}
+            where : {id_usuario : id}
+        })
+    }
+
+    async verificarMail(token: string){
+        return await prisma.usuario.update({
+            where: {token},
+            data : {verificado : true}
+
         })
     }
     

@@ -1,3 +1,4 @@
+import {type usuario } from './../../node_modules/.prisma/client/index.js';
 
 import { type Request, type Response } from "express";
 import { UsuarioService } from "../services/usuario.service.js";
@@ -45,34 +46,98 @@ export class UsuarioController {
         }
     }
 
-    public crearUsuario = async (req: Request, res: Response) => {
+    /*public existeMail = async (req: Request, res: Response) => {
+
         try {
-            const newUsuario:Usuario = req.body
+            const mail = String(req.params.mail);
+
+            const existeMail = await usuarioService.existeMail(mail);
+
+            if (!existeMail) {
+                
+                 res.status(200).json(existeMail);
+                 return false;
+            }
             
-            const usuario = await usuarioService.crearUsuario(newUsuario);
-            res.status(201).json(usuario)
+            res.status(404).json({ message: 'El mail ya esta registrado' })
+            return true
+           
+
+
         } catch (error) {
-            res.status(500).json({ message: "No se pudo crear el usuario", error })
+            res.status(500).json({ message: "No se pudo obtener el usuario", error })
         }
+    }*/
+
+    public crearUsuario = async (req: Request, res: Response) => {
+  try {
+    const newUsuario: Usuario = req.body;
+
+    const existe = await usuarioService.existeMail(newUsuario.mail!);
+
+    if (existe) {
+      return res.status(409).json({ message: "El usuario ya existe" });
     }
 
-    /*public actualizarUsuario = async (req: Request, res: Response) => {
+    const usuario = await usuarioService.crearUsuario(newUsuario);
+    res.status(201).json(usuario);
+  } catch (error) {
+    console.error("Error al crear usuario:", error);
+    res.status(500).json({ message: "No se pudo crear el usuario", error });
+  }
+};
 
-        const id = Number(req.params.id);
+
+    public verificarMail = async (req: Request, res: Response) => {
+
+        const token = String(req.params.token);
         const { nombre, id_empresa } = req.body;
 
-        if (isNaN(id)) {
-            return res.status(400).json("ID inválido")
-        }
-
         try {
-            const usuarioActualizado = await usuarioService.actualizarUsuario(id, { nombre, id_empresa })
-            res.status(200).json(usuarioActualizado);
+            const usuarioActualizado = await usuarioService.verificarMail(token)
+            res.status(200).json({ message: "Mail verificado"});
         } catch (error) {
-            res.status(500).json({ message: "No se pudo actualizar el usuario", error })
+            res.status(500).json({ message: "No se pudo verificar el mail", error })
         }
 
-    }*/
+    }
+
+    public login = async (req: Request, res: Response) => {
+        
+        try {
+            const {mail, password} = req.body;
+            if(!mail || !password){
+                return res.status(400).json({ 
+                    error: 'Mail y password son requeridos' 
+                });
+            }        
+            const usuarioLogeado = await usuarioService.login(mail, password)
+            return res.status(200).json({
+                success: true,
+                token: usuarioLogeado.token,
+                usuario: usuarioLogeado.usuario
+            });
+        } catch (error:any) {
+            console.error('Error en login:', error);
+            
+            if (error.message === 'Usuario no encontrado' || 
+                error.message === 'Contraseña incorrecta') {
+                return res.status(401).json({ 
+                    error: 'Credenciales inválidas' 
+                });
+            }
+            
+            if (error.message === 'Usuario no verificado') {
+                return res.status(403).json({ 
+                    error: 'Por favor verifica tu email antes de iniciar sesión' 
+                });
+            }
+
+            return res.status(500).json({ 
+                error: 'Error en el servidor' 
+            });
+        }
+    }
 
     public eliminarUsuario = async (req: Request, res: Response) => {
 

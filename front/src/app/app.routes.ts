@@ -1,13 +1,16 @@
 import { Routes } from '@angular/router';
 import { Home } from './public/home/home';
+import { Login } from './modules/usuarios/pages/login/login';
+
 import { list } from '@primeuix/themes/aura/autocomplete';
 import { pendingUntilEvent } from '@angular/core/rxjs-interop';
+
 
 export const routes: Routes = [
 
     {
         path: '',
-        component: Home
+        component: Login
     },
     {
         path: 'home',

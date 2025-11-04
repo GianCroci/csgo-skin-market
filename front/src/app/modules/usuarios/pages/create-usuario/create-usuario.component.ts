@@ -2,7 +2,6 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
 import { InputTextModule } from 'primeng/inputtext';
-//import { Empresa } from '../../../empresas/interfaces/empresa.interface';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { Usuario } from '../../interfaces/usuario.interface';
@@ -11,7 +10,7 @@ import { FormUsuario } from "../../components/form-usuario/form-usuario";
 
 @Component({
   selector: 'app-create-usuario',
-  imports: [ReactiveFormsModule, InputTextModule, Button, RouterLink, FormUsuario],
+  imports: [ReactiveFormsModule, InputTextModule, FormUsuario],
   templateUrl: './create-usuario.component.html',
   styleUrl: './create-usuario.component.css',
 })
@@ -23,16 +22,22 @@ export class CreateUsuarioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
   ngOnDestroy(): void {}
 
+  existeUsuario = false;
+
   crearUsuario(usuario:Usuario) {
     this.usuarioService.createUsuario(usuario).subscribe({
       next: (data: Usuario) => {
-        console.log(data);
+        console.log('se registro correctamente es usuario con mail: ' + data.mail);
       },
       error: (error) => {
+        if (error.status === 409) {
+          this.existeUsuario = true;
+          console.log('El mail ya está registrado')
+        }
         //mensaje de error
       },
       complete: () => {
-        this.router.navigate(['/usuarios/list-usuarios']);
+        this.router.navigate(['/home']);
       },
     });
   }

@@ -13,7 +13,7 @@ model usuario {
   apellido   String   @db.VarChar(100)
   mail       String   @unique @db.VarChar(150)
   password   String   @db.VarChar(255)
-  token      String?  @db.VarChar(255)
+  token      String?  @unique(map: "token") @db.VarChar(255)
   rol        String?  @default("usuario") @db.VarChar(50)
   verificado Boolean? @default(false)
 

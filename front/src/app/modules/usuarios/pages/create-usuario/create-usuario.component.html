@@ -2,13 +2,10 @@
   <div class="col">
     <h1>Crear Usuario</h1>
   </div>
-  <div class="col text-end">
-    <p-button icon="pi pi-undo" [routerLink]="[`/Usuarios/list-Usuarios`]"></p-button>
-  </div>
 </div>
 
 <div class="row">
     <div class="col">
-        <app-form-usuario (eventEmitterFormUsuario)="crearUsuario($event)"></app-form-usuario>
+        <app-form-usuario (eventEmitterFormUsuario)="crearUsuario($event)" [existeUsuario]="existeUsuario"></app-form-usuario>
     </div>
 </div>
