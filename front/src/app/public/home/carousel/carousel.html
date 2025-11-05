@@ -9,11 +9,10 @@
 
   <ng-template let-prod pTemplate="item">
     <app-product-card
-      [producto]="prod"
+      [producto]="productos"
       (productoAgregado)="onProductoAgregado($event)">
     </app-product-card>
   </ng-template>
 
 </p-carousel>
 
-<app-skins></app-skins>

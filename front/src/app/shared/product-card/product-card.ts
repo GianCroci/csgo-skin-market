@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-product-card',
@@ -9,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
-export class ProductCard {
+export class ProductCard  {
 
   // @Input() permite que el componente PADRE (Home, Carousel, etc.)
   // le pase la información del producto.
@@ -23,4 +24,5 @@ export class ProductCard {
     // Emitimos el evento hacia el padre, pasándole el producto
     this.productoAgregado.emit(this.producto);
   }
+
 }

@@ -4,7 +4,11 @@ import { prisma } from "../prisma.js";
 export class SkinsRepository{
 
     async findAllSkins(){
-        return await prisma.skins.findMany()
+        return await prisma.skins.findMany({
+            include:{
+                armas:true
+            }            
+        })
     }
 
     async findSkinsById(id:number){

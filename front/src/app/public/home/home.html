@@ -8,7 +8,15 @@
   </div>
   <h2 class="section-title">🔥 Destacados</h2>
 
-  <app-carousel
+  <!--   <app-carousel
+    (productos)="cargarTodasLasSkins"
+    (productoAgregadoCarousel)="onAgregarProducto($event)">
+  </app-carousel>
+  -->
+
+
+  
+<app-carousel
     [productos]="productosDestacados"
     (productoAgregadoCarousel)="onAgregarProducto($event)">
   </app-carousel>
@@ -35,8 +43,8 @@
     titulo="👤 Agentes (Skins)"
     [productos]="productosAgentes"
     (productoAgregadoFila)="onAgregarProducto($event)">
-  </app-product-row>
-
+  </app-product-row>>
+  
 
   <div class="ver-todos-container">
   <h3 class="cta-title">¿Buscas algo más?</h3>

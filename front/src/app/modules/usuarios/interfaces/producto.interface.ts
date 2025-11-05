@@ -9,10 +9,17 @@
 }*/
 
 export interface Producto {
-  id?: number;
-  nombre: string;
+  id_skin:      number;
+  nombre_skin:  string;
   id_arma_base: number;
-  rareza: string;
-  precio: number;
-  imagen: string;
+  rareza:       string;
+  precio:       number;
+  url_imagen:   string;
+  
+  armas: {
+    id_arma:   number;
+    nombre_arma: string;
+    categoria: string; 
+  };
+  
 }
