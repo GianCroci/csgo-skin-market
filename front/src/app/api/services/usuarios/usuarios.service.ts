@@ -5,6 +5,7 @@ import { Usuario } from '../../../modules/usuarios/interfaces/usuario.interface'
 import { map, Observable, throwError } from 'rxjs';
 import { UsuarioMapper } from './mapping/usuarios.mapper';
 import { UsuarioRest } from './mapping/usuario.interface.rest';
+import { VerificarMail } from '../../../modules/usuarios/pages/verificar-mail/verificar-mail';
 
 @Injectable({
   providedIn: 'root',
@@ -41,4 +42,13 @@ export class UsuariosService {
   updateUsuario(usuario: Usuario) {
     return this.http.put<Usuario>(`${environment.api_url}/usuario/${usuario.id}`,usuario);
   }
+
+  verificarMail(token: string) {
+    return this.http.put<Usuario>(`${environment.api_url}/usuario/${token}`, {});
+  }
+
+  login(mail:string, password:string){
+    return this.http.post<Usuario>(`${environment.api_url}/usuario/login/`, {mail, password});
+  }
+
 }

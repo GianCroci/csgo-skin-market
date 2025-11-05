@@ -4,20 +4,17 @@ import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
-import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
-import { Usuario } from "../../interfaces/usuario.interface"
 import { Message } from 'primeng/message';
-
+import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
+import { Usuario } from '../../interfaces/usuario.interface';
 
 @Component({
-  selector: 'app-form-usuario',
+  selector: 'app-login',
   imports: [ReactiveFormsModule, InputTextModule, Message],
-  templateUrl: './form-usuario.html',
-  styleUrl: './form-usuario.css',
+  templateUrl: './login.html',
+  styleUrl: './login.css',
 })
-export class FormUsuario {
-
-  title:string = "Crear Usuario";
+export class Login {
 
   private fb = inject(FormBuilder);
 
@@ -25,19 +22,17 @@ export class FormUsuario {
 
   form!: FormGroup;
 
-  usuarioService = inject(UsuariosService);
+  usuariosServices = inject(UsuariosService);
 
   existeUsuario = input<boolean>();
 
   usuario = input<Usuario>();
 
-  eventEmitterFormUsuario = output<Usuario>();
+ 
 
   ngOnInit(): void {
     
       this.form = this.fb.group({
-      nombre: [this.usuario()?.nombre, [Validators.required]],
-      apellido: [this.usuario()?.nombre, [Validators.required]],
       mail: [this.usuario()?.mail, [Validators.required, Validators.email]], 
       password: [this.usuario()?.nombre, [Validators.required, Validators.minLength(6)]]
     });
@@ -50,16 +45,17 @@ export class FormUsuario {
 
   ngOnDestroy(): void {}
 
-  sendUsuario() {
-
-      const usuario: Usuario = {
-      nombre: this.form.get('nombre')?.value,
-      apellido: this.form.get('apellido')?.value,
-      mail: this.form.get('mail')?.value,
-      password: this.form.get('password')?.value,
-    };
-
-    this.eventEmitterFormUsuario.emit(usuario);
-
+  login(mail: string, password: string) {
+    this.usuariosServices.login(mail, password).subscribe({
+      next: (data: Usuario) => {
+        console.log('se registro correctamente es usuario con mail: ' + data.mail);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        this.router.navigate(['/home']);
+      },
+    });
   }
 }

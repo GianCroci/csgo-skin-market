@@ -1,0 +1,19 @@
+<form [formGroup]="form" method="post" (ngSubmit)="login(form.get('mail')?.value, form.get('password')?.value)" class="flex flex-col gap-4 w-full sm:w-56">
+    
+    <div class="flex flex-col gap-1">
+        <input pInputText type="mail" id="mail" placeholder="Mail" formControlName="mail" [invalid]="isInvalid('mail')" />
+        @if (isInvalid('mail')) {
+            @if (form.get('mail')?.errors?.['required']) {
+                <p-message severity="error" size="small" variant="simple">Se requiere mail</p-message>
+            }
+            @if (form.get('mail')?.errors?.['email']) {
+                <p-message severity="error" size="small" variant="simple">Agregue un mail valido</p-message>
+            }
+        }
+    </div>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="password" id="password" placeholder="Contraseña" formControlName="password" [invalid]="isInvalid('password')" />
+    </div>
+    <button pButton severity="secondary" type="submit"><span pButtonLabel>Ingresar</span></button>
+</form>
+

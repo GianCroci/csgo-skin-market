@@ -1,3 +1,4 @@
+import {type usuario } from './../../node_modules/.prisma/client/index.js';
 import type { Usuario } from "../models/usuario.model.js";
 import { prisma } from "../prisma.js";
 
@@ -47,6 +48,14 @@ export class UsuarioRepository{
     async deleteUsuario(id:number){
         return await prisma.usuario.delete({
             where : {id_usuario : id}
+        })
+    }
+
+    async verificarMail(token: string){
+        return await prisma.usuario.update({
+            where: {token},
+            data : {verificado : true}
+
         })
     }
     

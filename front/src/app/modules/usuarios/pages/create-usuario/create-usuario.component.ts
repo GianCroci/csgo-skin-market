@@ -22,12 +22,18 @@ export class CreateUsuarioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
   ngOnDestroy(): void {}
 
+  existeUsuario = false;
+
   crearUsuario(usuario:Usuario) {
     this.usuarioService.createUsuario(usuario).subscribe({
       next: (data: Usuario) => {
-        console.log(data);
+        console.log('se registro correctamente es usuario con mail: ' + data.mail);
       },
       error: (error) => {
+        if (error.status === 409) {
+          this.existeUsuario = true;
+          console.log('El mail ya está registrado')
+        }
         //mensaje de error
       },
       complete: () => {

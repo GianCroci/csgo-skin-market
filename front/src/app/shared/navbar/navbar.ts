@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, MenubarModule, RouterModule],
+
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -32,17 +33,24 @@ export class Navbar {
       {
         label: 'Perfil',
         icon: 'pi pi-user',
+<<<<<<< HEAD
         items: [
+=======
+        items: [ // Sub-menú
+>>>>>>> e49316a (first commit)
           {
             label: 'Mi Cuenta',
             icon: 'pi pi-user-edit'
           },
           {
+<<<<<<< HEAD
             label: 'Mis Pedidos',
             icon: 'pi pi-list',
             routerLink: '/usuarios/list-mis-pedidos'
           },
           {
+=======
+>>>>>>> e49316a (first commit)
             label: 'Cerrar Sesión',
             icon: 'pi pi-sign-out',
             routerLink: '/carrito'
