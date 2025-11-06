@@ -16,7 +16,7 @@ export class SkinsService {
 
   listSkins(): Observable<Producto[]> {
 
-    return this.http.get<Producto[]>(`${environment.api_url}/skin/`);
+    return this.http.get<Producto[]>(`${environment.api_url}/skin`);
   }
 
   

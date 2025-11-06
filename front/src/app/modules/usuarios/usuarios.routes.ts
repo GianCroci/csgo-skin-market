@@ -23,8 +23,7 @@ export const usuariosRoutes: Routes = [
                 component : UpdateUsuarioComponent
             },
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                 path : 'list-mis-pedidos',
                 component : ListPedidosComponent
             },
@@ -33,9 +32,7 @@ export const usuariosRoutes: Routes = [
               component: ListDetallePedido
             },
             {
-=======
->>>>>>> e49316a (first commit)
-=======
+
                 path : 'verificar-mail/:token',
                 component : VerificarMail
             },
@@ -44,15 +41,11 @@ export const usuariosRoutes: Routes = [
                 component : Login
             },
             {
->>>>>>> c5d35b3 (login)
+
                 path : '**',
                 redirectTo : 'list-usuarios'
             }
         ]
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> e49316a (first commit)
 ];

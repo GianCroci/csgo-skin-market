@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } fro
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
 
 
 @Component({
@@ -14,15 +15,17 @@ export class ProductCard  {
 
   // @Input() permite que el componente PADRE (Home, Carousel, etc.)
   // le pase la información del producto.
-  @Input() producto: any = {};
-  // @Output() permite que este componente HIJO le "avise" al PADRE
+  @Input() producto: Producto = {} as Producto  
+// @Output() permite que este componente HIJO le "avise" al PADRE
   // que algo pasó (ej. el usuario hizo clic en "Agregar").
   @Output() productoAgregado = new EventEmitter<any>();
 
   agregarAlCarrito() {
-    console.log('Agregando desde la CARD:', this.producto.nombre);
+    if(this.producto){
+          console.log('Agregando desde la CARD:', this.producto);
+          this.productoAgregado.emit(this.producto);
+    };
     // Emitimos el evento hacia el padre, pasándole el producto
-    this.productoAgregado.emit(this.producto);
   }
 
 }

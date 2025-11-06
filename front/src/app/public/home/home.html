@@ -8,18 +8,16 @@
   </div>
   <h2 class="section-title">🔥 Destacados</h2>
 
-  <!--   <app-carousel
-    (productos)="cargarTodasLasSkins"
+   <app-carousel
+    (productos)="productosDestacados"
     (productoAgregadoCarousel)="onAgregarProducto($event)">
   </app-carousel>
-  -->
-
-
   
-<app-carousel
-    [productos]="productosDestacados"
-    (productoAgregadoCarousel)="onAgregarProducto($event)">
-  </app-carousel>
+  <app-product-row
+    titulo="TODAS LAS SKINS"
+    [productos]="skins"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
 
   <app-product-row
     titulo="Rifles Populares"
@@ -28,23 +26,16 @@
   </app-product-row>
 
   <app-product-row
+    titulo="AWP"
+    [productos]="productosRiflesAWP"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
     titulo="Cuchillos Exclusivos"
     [productos]="productosCuchillos"
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
-
-  <app-product-row
-    titulo="🧤 Guantes Raros"
-    [productos]="productosGuantes"
-    (productoAgregadoFila)="onAgregarProducto($event)">
-  </app-product-row>
-
-  <app-product-row
-    titulo="👤 Agentes (Skins)"
-    [productos]="productosAgentes"
-    (productoAgregadoFila)="onAgregarProducto($event)">
-  </app-product-row>>
-  
 
   <div class="ver-todos-container">
   <h3 class="cta-title">¿Buscas algo más?</h3>
