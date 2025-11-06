@@ -1,7 +1,7 @@
-<form [formGroup]="form" method="post" (ngSubmit)="login(form.get('mail')?.value, form.get('password')?.value)" class="flex flex-col gap-4 w-full sm:w-56">
+<form [formGroup]="form" (ngSubmit)="login()" class="flex flex-col gap-4 w-full sm:w-56">
     
     <div class="flex flex-col gap-1">
-        <input pInputText type="mail" id="mail" placeholder="Mail" formControlName="mail" [invalid]="isInvalid('mail')" />
+        <input pInputText type="email" id="mail" placeholder="Mail" formControlName="mail" [invalid]="isInvalid('mail')" />
         @if (isInvalid('mail')) {
             @if (form.get('mail')?.errors?.['required']) {
                 <p-message severity="error" size="small" variant="simple">Se requiere mail</p-message>
@@ -13,7 +13,17 @@
     </div>
     <div class="flex flex-col gap-1">
         <input pInputText type="password" id="password" placeholder="Contraseña" formControlName="password" [invalid]="isInvalid('password')" />
+        @if (isInvalid('password')) {
+            @if (form.get('password')?.errors?.['required']) {
+                <p-message severity="error" size="small" variant="simple">Se requiere contraseña</p-message>
+            }
+            @if (form.get('password')?.errors?.['minlength']) {
+                <p-message severity="error" size="small" variant="simple">Mínimo 6 caracteres</p-message>
+            }
+        }
     </div>
-    <button pButton severity="secondary" type="submit"><span pButtonLabel>Ingresar</span></button>
+    <button pButton severity="secondary" type="submit" [disabled]="form.invalid">
+        <span pButtonLabel>Ingresar</span>
+    </button>
 </form>
 
