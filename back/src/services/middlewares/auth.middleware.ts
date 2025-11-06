@@ -15,7 +15,7 @@ declare global {
 
 export const verificarToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-
+    console.log('Authorization header:', authHeader);
     if (!authHeader) {
         return res.status(401).json({ error: 'Token no proporcionado' });
     }

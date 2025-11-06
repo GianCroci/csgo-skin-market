@@ -7,15 +7,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model producto {
+  id            Int     @id @default(autoincrement())
+  nombre        String  @db.VarChar(100)
+  descripcion   String? @db.VarChar(500)
+  clasificacion String  @db.VarChar(100) // "Rifle", "Cuchillo", "Agente"
+  precio        Decimal @db.Decimal
+  imagenUrl     String  @db.VarChar(255) // "img/AWP-Dragon-Lore.png"
+
+  carrito_producto carrito_producto[]
+
+  @@map("producto")
+}
+
 model usuario {
   id_usuario Int      @id @default(autoincrement())
   nombre     String   @db.VarChar(100)
   apellido   String   @db.VarChar(100)
   mail       String   @unique @db.VarChar(150)
   password   String   @db.VarChar(255)
-  token      String?  @unique(map: "token") @db.VarChar(255)
+  token      String?  @unique @db.VarChar(255)
   rol        String?  @default("usuario") @db.VarChar(50)
   verificado Boolean? @default(false)
 
+  carrito carrito?
+
   @@map("usuario")
+}
+
+model carrito {
+  id             Int       @id @default(autoincrement())
+  usuario_id     Int       @unique // El 'id_usuario' del usuario
+  fecha_creacion DateTime? @default(now()) @db.Timestamp(6)
+
+  usuario usuario @relation(fields: [usuario_id], references: [id_usuario], onDelete: Cascade, onUpdate: Cascade)
+
+  carrito_producto carrito_producto[]
+
+  @@map("carrito")
+}
+
+model carrito_producto {
+  id          Int  @id @default(autoincrement())
+  carrito_id  Int
+  producto_id Int
+  cantidad    Int? @default(1)
+
+  carrito  carrito  @relation(fields: [carrito_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  producto producto @relation(fields: [producto_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("carrito_producto")
 }

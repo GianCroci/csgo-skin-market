@@ -15,4 +15,16 @@ usuarioRouter.delete('/:id', verificarToken, usuarioController.eliminarUsuario.b
 usuarioRouter.get('/', verificarToken, usuarioController.getUsuarios.bind(usuarioController));
 usuarioRouter.get('/:id', verificarToken, usuarioController.getUsuario.bind(usuarioController));
 
+// Obtener carrito del usuario autenticado
+usuarioRouter.get('/carrito/:id', verificarToken, usuarioController.getProductosDelCarritoDeUnUsuario.bind(usuarioController));
+
+// Agregar producto al carrito del usuario autenticado
+usuarioRouter.post('/agregar/:id', verificarToken, usuarioController.postAgregarProductoAlCarrito.bind(usuarioController));
+
+// Borrar producto del carrito del usuario autenticado
+usuarioRouter.post('/borrarProducto/:id', verificarToken, usuarioController.postBorrarProductoDelCarrito.bind(usuarioController));
+
+// Vaciar carrito del usuario autenticado
+usuarioRouter.post('/vaciar/:id', verificarToken, usuarioController.postVaciarCarrito.bind(usuarioController));
+
 export default usuarioRouter;

@@ -32,15 +32,15 @@ interface User {
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api'; // Ajusta tu URL
   private readonly TOKEN_KEY = 'auth_token';
-  
+
   // Signals para estado reactivo
   private userSignal = signal<User | null>(null);
   private isAuthSignal = signal<boolean>(false);
-  
+
   // Exponer como readonly
   user = this.userSignal.asReadonly();
   isAuthenticated = this.isAuthSignal.asReadonly();
-  
+
   // Computed para el nombre completo
   fullName = computed(() => {
     const user = this.userSignal();
@@ -62,7 +62,7 @@ export class AuthService {
           if (response.success && response.token) {
             // Guardar token
             localStorage.setItem(this.TOKEN_KEY, response.token);
-            
+
             // Actualizar estado
             this.userSignal.set(response.user);
             this.isAuthSignal.set(true);
@@ -91,16 +91,16 @@ export class AuthService {
   // Verificar si hay sesión activa al iniciar la app
   private checkAuthStatus(): void {
     const token = this.getToken();
-    
+
     if (token) {
       // Decodificar el token para obtener datos del usuario
       try {
         const payload = this.decodeToken(token);
-        
+
         // Verificar si el token no ha expirado
         if (payload.exp * 1000 > Date.now()) {
           this.userSignal.set({
-            id: payload.id,
+            id: payload.id_usuario,
             nombre: payload.nombre,
             apellido: payload.apellido,
             mail: payload.mail,

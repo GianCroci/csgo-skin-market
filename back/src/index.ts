@@ -1,7 +1,8 @@
 import express, {type Request, type Response} from "express";
 import { AppRoutes } from "./routes/routes.js";
 import cors from 'cors'
-
+import 'dotenv/config';
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
 const app = express();
 
 const PORT = 3000;
