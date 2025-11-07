@@ -8,20 +8,9 @@
   </div>
   <h2 class="section-title">🔥 Destacados</h2>
 
-   <app-carousel
-    (productos)="productosDestacados"
-    (productoAgregadoCarousel)="onAgregarProducto($event)">
-  </app-carousel>
-  
   <app-product-row
-    titulo="TODAS LAS SKINS"
-    [productos]="skins"
-    (productoAgregadoFila)="onAgregarProducto($event)">
-  </app-product-row>
-
-  <app-product-row
-    titulo="Rifles Populares"
-    [productos]="productosRifles"
+    titulo="AK-47"
+    [productos]="productosak47"
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
 
@@ -31,9 +20,22 @@
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
 
+
+  <app-product-row
+    titulo="SMG"
+    [productos]="productosSMG"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
   <app-product-row
     titulo="Cuchillos Exclusivos"
     [productos]="productosCuchillos"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
+    titulo="Guantes"
+    [productos]="productosGuantes"
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
 
