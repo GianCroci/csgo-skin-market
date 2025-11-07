@@ -8,10 +8,11 @@ import { Message } from 'primeng/message';
 import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
 import { Usuario } from '../../interfaces/usuario.interface';
 import { AuthService } from '../../../../api/services/auth.service';
+import { VideoBackgroundComponent } from "../../../../shared/video-background/video-background";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, InputTextModule, Message],
+  imports: [ReactiveFormsModule, InputTextModule, Message, VideoBackgroundComponent, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

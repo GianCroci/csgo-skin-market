@@ -1,4 +1,6 @@
-<form [formGroup]="form" method="post" (ngSubmit)="sendUsuario()" class="flex flex-col gap-4 w-full sm:w-56">
+<div class="registro-container">
+<h1>Registrarse</h1>
+<form [formGroup]="form" method="post" (ngSubmit)="sendUsuario()" class="flex flex-col gap-4 w-full sm:w-56 mx-auto">
     <div class="flex flex-col gap-1">
         <input pInputText type="text" id="nombre" placeholder="Nombre" formControlName="nombre" [invalid]="isInvalid('nombre')" />
         @if (isInvalid('nombre')) {
@@ -49,7 +51,7 @@
             <p-message severity="error" size="small" variant="simple">Pais es requerido.</p-message>
         }
     </div>
-    <div class="flex flex-col gap-1">
+ <div class="flex flex-col gap-1 password">
   <p-password 
       id="password"
       placeholder="Contraseña"
@@ -57,8 +59,7 @@
       [feedback]="true"
       [toggleMask]="true"
       [invalid]="isInvalid('password')"
-      autocomplete="off"
-      styleClass="w-full sm:w-56">
+      autocomplete="off">
       
       <ng-template #header>
           <div class="font-semibold text-sm mb-2">Requisitos de contraseña</div>
@@ -86,5 +87,6 @@
     }
   </p-password>
 </div>
-    <button pButton severity="secondary" type="submit" [disabled]="form.invalid"><span pButtonLabel>Registrarme</span></button>
+    <p-button pButton severity="secondary" type="submit" [disabled]="form.invalid"><span pButtonLabel>Registrarme</span></p-button>
 </form>
+</div>
