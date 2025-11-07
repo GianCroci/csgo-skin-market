@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ProductRow, ButtonModule,Carousel],
+  imports: [CommonModule, ProductRow, ButtonModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
