@@ -1,7 +1,7 @@
-<p-card [header]="producto.nombre" [subheader]="producto.clasificacion" styleClass="product-card">
+<p-card [header]="producto.nombre_skin" [subheader]="producto.rareza" styleClass="product-card">
 
   <ng-template pTemplate="header">
-    <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="product-image">
+    <img [src]="producto.url_imagen" [alt]="producto.nombre_skin" class="product-image">
   </ng-template>
 
   <ng-template pTemplate="content">

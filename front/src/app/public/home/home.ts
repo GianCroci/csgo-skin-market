@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { ProductRow } from './product-row/product-row';
 import { Carousel } from './carousel/carousel';
 import { ButtonModule } from 'primeng/button';
@@ -7,15 +7,24 @@ import {UsuariosService} from '../../api/services/usuarios/usuarios.service';
 import {AuthService} from '../../api/services/auth.service';
 import {MessageService} from 'primeng/api';
 import {Toast} from 'primeng/toast';
+import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
+import { SkinsService } from '../../api/services/skins/skins.service';
+import { Subscription } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, Carousel, ProductRow, ButtonModule, Toast],
+  imports: [CommonModule, ProductRow, ButtonModule, Carousel, Toast],
   templateUrl: './home.html',
   styleUrl: './home.css',
   providers: [MessageService]
 })
-export class Home {
+export class Home implements OnInit, OnDestroy{
+
+  public skins: Producto[]= [];
+  private skinService= inject(SkinsService);
+  private skinSubscription?: Subscription;
 
   usuarioService = inject(UsuariosService);
   authService = inject(AuthService);
@@ -24,56 +33,31 @@ export class Home {
   idUsuario!: number;
 
 
+
+
+  productosDestacados: Producto[] = [];
+  productosak47: Producto[] = [];
+  productosSMG: Producto[] = [];
+  productosM5: Producto[] = [];
+  productosCuchillos: Producto[] = [];
+  productosGuantes: Producto[] = [];
+  productosRiflesAWP: Producto[]=[];
+
+
+
   ngOnInit(): void {
     this.idUsuario = this.authService.user()?.id!;
+    this.cargarTodasLasSkins();
   }
 
-  // Lista para el carrusel
-  productosDestacados: any[] = [
-    { id: 1, nombre: 'AWP | Dragon Lore', clasificacion: 'Rifle', precio: 4500.00, imagenUrl: 'img/AWP-Dragon-Lore.png' },
-    { id: 2, nombre: 'Cuchillo Karambit | Fade', clasificacion: 'Cuchillo', precio: 1800.00, imagenUrl: 'img/Cuchillo-Karambit-Fade.png' },
-    { id: 3, nombre: 'AK-47 | Asiimov', clasificacion: 'Rifle', precio: 350.00, imagenUrl: 'img/AK-47-Asiimov.png' },
-    { id: 12, nombre: 'Guantes de Especialista | Fade', clasificacion: 'Guantes', precio: 2300.00, imagenUrl: 'img/Guantes-Fade.png' },
-    { id: 16, nombre: '\'The Doctor\' Romanov', clasificacion: 'Agente', precio: 12.00, imagenUrl: 'img/Agente-Romanov.png' }
-  ];
+  ngOnDestroy(): void {
+    this.skinSubscription?.unsubscribe();
+  }
 
-  // Rifles
-  productosRifles: any[] = [
-    { id: 3, nombre: 'AK-47 | Asiimov', clasificacion: 'Rifle', precio: 350.00, imagenUrl: 'img/AK-47-Asiimov.png' },
-    { id: 1, nombre: 'AWP | Dragon Lore', clasificacion: 'Rifle', precio: 4500.00, imagenUrl: 'img/AWP-Dragon-Lore.png' },
-    { id: 4, nombre: 'M4A4 | Howl', clasificacion: 'Rifle', precio: 3200.00, imagenUrl: 'img/M4A4-Howl.png' },
-    { id: 6, nombre: 'M4A1-S | Printstream', clasificacion: 'Rifle', precio: 250.00, imagenUrl: 'img/M4A1-S-Printstream.png' },
-    { id: 7, nombre: 'Glock-18 | Fade', clasificacion: 'Pistola', precio: 1500.00, imagenUrl: 'img/Glock-18-Fade.png' },
-    { id: 8, nombre: 'USP-S | Kill Confirmed', clasificacion: 'Pistola', precio: 90.00, imagenUrl: 'img/USP-S-Kill-Confirmed.png' }
-  ];
-
-  // Cuchillos
-  productosCuchillos: any[] = [
-    { id: 2, nombre: 'Cuchillo Karambit | Fade', clasificacion: 'Cuchillo', precio: 1800.00, imagenUrl: 'img/Cuchillo-Karambit-Fade.png' },
-    { id: 5, nombre: 'Bayoneta M9 | Tiger Tooth', clasificacion: 'Cuchillo', precio: 750.00, imagenUrl: 'img/Bayoneta-M9-Tiger-Tooth.png' },
-    { id: 9, nombre: 'Cuchillo Mariposa | Doppler', clasificacion: 'Cuchillo', precio: 2100.00, imagenUrl: 'img/Butterfly-Doppler.png' },
-    { id: 10, nombre: 'Cuchillo Huntsman | Slaughter', clasificacion: 'Cuchillo', precio: 450.00, imagenUrl: 'img/Huntsman-Slaughter.png' }
-  ];
-
-  // Guantes
-  productosGuantes: any[] = [
-    { id: 11, nombre: 'Guantes Deportivos | Slingshot', clasificacion: 'Guantes', precio: 1100.00, imagenUrl: 'img/Guantes-Slingshot.png' },
-    { id: 12, nombre: 'Guantes de Especialista | Fade', clasificacion: 'Guantes', precio: 2300.00, imagenUrl: 'img/Guantes-Fade.png' },
-    { id: 13, nombre: 'Guantes Broken Fang | Jade', clasificacion: 'Guantes', precio: 300.00, imagenUrl: 'img/Guantes-Jade.png' }
-  ];
-
-  //  Agentes
-  productosAgentes: any[] = [
-    { id: 14, nombre: 'Sir Bloody Darryl', clasificacion: 'Agente', precio: 35.00, imagenUrl: 'img/Agente-Darryl.png' },
-    { id: 15, nombre: 'Special Agent Ava', clasificacion: 'Agente', precio: 18.00, imagenUrl: 'img/Agente-Ava.png' },
-    { id: 16, nombre: '\'The Doctor\' Romanov', clasificacion: 'Agente', precio: 12.00, imagenUrl: 'img/Agente-Romanov.png' }
-  ]
-
-
-  onAgregarProducto(producto: any) {
+  onAgregarProducto(producto: Producto) {
     // Agregar producto a carrito
-    console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre);
-    this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, { productoId: producto.id }).subscribe({
+    console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre_skin);
+    this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, { productoId: producto.id_skin }).subscribe({
         next: () => {
           // Actualiza la vista, por ejemplo, vuelve a cargar el carrito
           console.log('Producto agregado correctamente');
@@ -87,11 +71,24 @@ export class Home {
         }
       }
     )
+
   }
 
-  verTodosLosProductos() {
-    // lógica para navegar
-    console.log("Navegando a todos los productos...");
+  cargarTodasLasSkins():void
+  {
+    this.skinSubscription= this.skinService.listSkins().subscribe({
+
+      next:(productos: Producto[]) =>{
+        console.log("Skins recibidas.")
+
+        this.skins= productos;
+
+        this.filtrarSkinsParaRows();
+      },
+      error:(err) =>{
+        console.log("Fallo al cargar las skins");
+      }
+    });
   }
 
   showBottomRight() {
@@ -103,5 +100,43 @@ export class Home {
       life: 3000
     });
   }
+
+  filtrarSkinsParaRows(){
+
+
+    this.productosak47= this.skins.filter(skin=>
+      skin.id_arma_base == 1
+    );
+
+    this.productosRiflesAWP= this.skins.filter(skin=>
+      skin.id_arma_base == 2
+    );
+
+    this.productosCuchillos= this.skins.filter(skin=>
+      skin.id_arma_base == 3
+    );
+
+    this.productosM5= this.skins.filter(skin=>
+      skin.id_arma_base == 4
+    );
+
+    this.productosGuantes= this.skins.filter(skin=>
+      skin.id_arma_base == 5
+    );
+
+
+    /*
+    this.productosDestacados= this.skins.(
+      sort((a, b) => b.precio - a.precio) // Ordenamos de mayor a menor precio
+      .slice(0, 10); // Tomamos los primeros 10');
+  */
+    this.productosSMG= this.skins.filter(skin=>
+    skin.armas && skin.armas.categoria ==='SMG');
+  }
+
+  verTodosLosProductos(){
+
+  }
+
 
 }

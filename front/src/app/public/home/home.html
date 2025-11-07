@@ -14,8 +14,21 @@
   </app-carousel>
 
   <app-product-row
-    titulo="Rifles Populares"
-    [productos]="productosRifles"
+    titulo="AK-47"
+    [productos]="productosak47"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+  <app-product-row
+    titulo="AWP"
+    [productos]="productosRiflesAWP"
+    (productoAgregadoFila)="onAgregarProducto($event)">
+  </app-product-row>
+
+
+  <app-product-row
+    titulo="SMG"
+    [productos]="productosSMG"
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
 
@@ -26,17 +39,10 @@
   </app-product-row>
 
   <app-product-row
-    titulo="🧤 Guantes Raros"
+    titulo="Guantes"
     [productos]="productosGuantes"
     (productoAgregadoFila)="onAgregarProducto($event)">
   </app-product-row>
-
-  <app-product-row
-    titulo="👤 Agentes (Skins)"
-    [productos]="productosAgentes"
-    (productoAgregadoFila)="onAgregarProducto($event)">
-  </app-product-row>
-
 
   <div class="ver-todos-container">
   <h3 class="cta-title">¿Buscas algo más?</h3>

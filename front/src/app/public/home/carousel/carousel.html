@@ -1,3 +1,4 @@
+<!--
 <p-carousel
   [value]="productos"
   [numVisible]="3"
@@ -9,9 +10,35 @@
 
   <ng-template let-prod pTemplate="item">
     <app-product-card
+      [producto]="productos"
+      (productoAgregado)="onProductoAgregado($event)">
+    </app-product-card>
+  </ng-template>
+
+</p-carousel>
+-->
+
+
+<!-- 
+  Usamos el componente <p-carousel> de PrimeNG.
+  - [value]="productos" : Esta es la lista de productos que recibe del @Input() de carousel.ts
+  - [numVisible]="4"  : Cuántos se ven a la vez
+  - [numScroll]="1"   : Cuántos pasan al hacer clic
+-->
+<p-carousel 
+[value]="productos" 
+[numVisible]="4" 
+[numScroll]="1" 
+[circular]="true" 
+[autoplayInterval]="5000">
+
+  <ng-template let-prod pTemplate="item">
+    <app-product-card
       [producto]="prod"
       (productoAgregado)="onProductoAgregado($event)">
     </app-product-card>
   </ng-template>
 
 </p-carousel>
+
+

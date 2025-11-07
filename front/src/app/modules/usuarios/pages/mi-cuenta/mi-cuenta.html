@@ -1,0 +1,17 @@
+<app-video-background>
+<div class="perfil-container">
+<div class="perfil-img">
+  <img [src]="imagenUrl" alt="perfil">
+</div>
+<div>
+@if (usuario(); as user) {
+    <div class="perfil-info">
+        <h1>Nombre: {{user.nombre}} {{user.apellido}}</h1>
+        <p>Mail: {{user.mail}}</p>
+        <p>Provincia: {{user.provincia}}</p>
+        <p>Pais: {{user.pais}}</p>
+    </div>
+}
+</div>
+</div>
+</app-video-background>

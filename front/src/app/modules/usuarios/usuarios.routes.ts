@@ -8,6 +8,7 @@ import {VerificarMail} from './pages/verificar-mail/verificar-mail';
 import {Login} from './pages/login/login';
 import {authGuard} from '../../api/guards/auth.guard';
 import {ProductosCarritoUsuario} from './pages/productos-carrito-usuario/productos-carrito-usuario';
+import { MiCuenta } from './pages/mi-cuenta/mi-cuenta';
 
 
 export const usuariosRoutes: Routes = [
@@ -23,6 +24,11 @@ export const usuariosRoutes: Routes = [
       {
         path: 'update-usuario/:id',
         component: UpdateUsuarioComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'mi-cuenta',
+        component: MiCuenta,
         canActivate: [authGuard]
       },
       {

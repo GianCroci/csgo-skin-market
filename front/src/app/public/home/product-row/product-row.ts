@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCard } from '../../../shared/product-card/product-card';
+import { Producto } from '../../../modules/usuarios/interfaces/producto.interface';
+
 
 @Component({
   selector: 'app-product-row',
@@ -9,16 +11,20 @@ import { ProductCard } from '../../../shared/product-card/product-card';
   styleUrl: './product-row.css',
 })
 export class ProductRow {
-  @Input() titulo: string = '';
-  @Input() productos: any[] = [];
 
-  // Este componente solo "hará de puente"
   @Output() productoAgregadoFila = new EventEmitter<any>();
 
-  // Cuando la card emite un evento, este método lo captura
-  onProductoAgregado(producto: any) {
-    console.log('Evento capturado en la FILA:', producto.nombre);
-    // Y lo vuelve a emitir hacia el componente HOME
+  @Input() titulo: string = '';
+  @Input() productos: Producto[] = [];
+
+  // Este componente solo "hará de puente"
+
+  onProductoAgregado(producto:Producto){
+    console.log("Evento capturado en la fila: ", producto.nombre_skin);
     this.productoAgregadoFila.emit(producto);
+
   }
-}
+
+  }
+  
+

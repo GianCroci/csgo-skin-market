@@ -20,6 +20,7 @@ export class Navbar {
 
 
   items = computed<MenuItem[]>(() => {
+    
     const isLogged = this.authService.isAuthenticated();
 
     const baseItems: MenuItem[] = [
@@ -35,7 +36,6 @@ export class Navbar {
       }
     ];
 
-    // ✅ Agregar items según estado de autenticación
     if (isLogged) {
       baseItems.push({
         label: 'Perfil',

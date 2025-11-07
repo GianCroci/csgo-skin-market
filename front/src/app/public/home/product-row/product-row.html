@@ -2,7 +2,7 @@
   <h2>{{ titulo }}</h2>
 
   <div class="product-list">
-    @for (prod of productos; track prod.id) {
+    @for (prod of productos; track prod.id_skin) {
       <app-product-card
         [producto]="prod"
         (productoAgregado)="onProductoAgregado($event)">
