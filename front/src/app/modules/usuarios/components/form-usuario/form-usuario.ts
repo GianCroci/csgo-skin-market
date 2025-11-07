@@ -14,7 +14,7 @@ import { DividerModule } from 'primeng/divider';
 @Component({
   selector: 'app-form-usuario',
   imports: [ReactiveFormsModule, InputTextModule, Message, PasswordModule,
-    DividerModule],
+    DividerModule, Button],
   templateUrl: './form-usuario.html',
   styleUrls: ['./form-usuario.css']
 })

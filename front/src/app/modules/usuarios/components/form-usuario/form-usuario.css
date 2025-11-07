@@ -1,0 +1,27 @@
+.registro-container{
+    display: flex;
+    flex-direction: column;
+    
+}
+form{
+    margin: auto;
+    text-align: center;
+    border: 2px solid gray;
+    border-radius: 5%;
+    padding: 20px;
+    width: 30%;
+}
+.password{
+    width: 100%;
+}
+div{
+    margin: 5px;
+    
+}
+input{
+    width: 100%;
+}
+h1{
+    text-align: center;
+}
+
