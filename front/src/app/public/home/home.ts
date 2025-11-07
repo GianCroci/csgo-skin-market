@@ -21,9 +21,13 @@ export class Home implements OnInit, OnDestroy{
 
   // Lista para el carrusel
   productosDestacados: Producto[] = [];
-  productosRifles: Producto[] = [];
+  productosak47: Producto[] = [];
+  productosSMG: Producto[] = [];
+  productosM5: Producto[] = [];
   productosCuchillos: Producto[] = [];
-  productosRiflesAWP: Producto[] = [];
+  productosGuantes: Producto[] = [];
+  productosRiflesAWP: Producto[]=[];
+
 
 
   ngOnInit(): void {
@@ -60,19 +64,34 @@ export class Home implements OnInit, OnDestroy{
   filtrarSkinsParaRows(){
 
 
-    this.productosRifles= this.skins.filter(skin=>
-      skin.armas && skin.armas.categoria ==='Rifle');
+    this.productosak47= this.skins.filter(skin=>
+      skin.id_arma_base == 1
+    );
 
+    this.productosRiflesAWP= this.skins.filter(skin=>
+      skin.id_arma_base == 2
+    );
+    
     this.productosCuchillos= this.skins.filter(skin=>
-    skin.armas && skin.armas.categoria ==='Cuchillo');
+      skin.id_arma_base == 3
+    );
+
+    this.productosM5= this.skins.filter(skin=>
+      skin.id_arma_base == 4
+    );
+
+    this.productosGuantes= this.skins.filter(skin=>
+      skin.id_arma_base == 5
+    );
+
 
     /*
     this.productosDestacados= this.skins.(
       sort((a, b) => b.precio - a.precio) // Ordenamos de mayor a menor precio
       .slice(0, 10); // Tomamos los primeros 10');
   */
-    this.productosRiflesAWP= this.skins.filter(skin=>
-    skin.armas && skin.armas.categoria ==='AWP');
+    this.productosSMG= this.skins.filter(skin=>
+    skin.armas && skin.armas.categoria ==='SMG');
   }
 
   verTodosLosProductos(){
