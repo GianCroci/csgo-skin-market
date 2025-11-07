@@ -6,4 +6,5 @@ export interface Carrito_Producto{
   id_producto:number;
   cantidad:number;
   producto:Producto;
+  skin:Producto;
 }

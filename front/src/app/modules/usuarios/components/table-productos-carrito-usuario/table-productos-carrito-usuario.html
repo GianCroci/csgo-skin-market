@@ -16,28 +16,28 @@
 
     <ng-template #body let-carrito_producto>
       <tr>
-        <td style="min-width:150px">{{ carrito_producto.producto.nombre }}</td>
+        <td style="min-width:150px">{{ carrito_producto.skin.nombre_skin }}</td>
         <td>
           <img
-            [src]="carrito_producto.producto.imagenUrl"
-            [alt]="carrito_producto.producto.nombre"
+            [src]="carrito_producto.skin.url_imagen"
+            [alt]="carrito_producto.skin.nombre_skin"
             class="w-24 rounded responsive-img"
           />
         </td>
-        <td style="min-width:100px">${{ carrito_producto.producto.precio  }}</td>
-        <td style="min-width:100px"></td>
+        <td style="min-width:100px">${{carrito_producto.skin.precio}}</td>
+        <td style="min-width:100px">{{carrito_producto.cantidad}}</td>
         <td style="min-width:120px; text-align:center;">
           <p-button
             icon="pi pi-plus"
             styleClass="p-button-success"
-            (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.producto.id)">
+            (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin)">+
           </p-button>
         </td>
         <td style="min-width:140px; text-align:center;">
           <p-button
             icon="pi pi-minus"
             styleClass="p-button-danger"
-            (onClick)="eliminarProductoDelCarrito(carrito_producto.producto.id)">
+            (onClick)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin)">-
           </p-button>
         </td>
       </tr>
@@ -48,39 +48,39 @@
 <!-- Mobile Cards -->
 <div class="mobile-only" *ngIf="productos.length > 0">
   <div *ngFor="let carrito_producto of productos"
-       [ngStyle]="{
-         'background-image': 'url(' + carrito_producto.producto.imagenUrl + ')',
-         'background-size': 'cover',
-         'background-position': 'center',
-         'width': '100%',
+        [ngStyle]="{
+          'background-image': 'url(' + carrito_producto.skin.url_imagen + ')',
+          'background-size': 'cover',
+          'background-position': 'center',
+          'width': '100%',
           'height': '220px',
-         'color': 'white',
-         'border-radius': '8px',
-         'padding': '1rem',
-         'margin-bottom': '1rem',
-         'box-shadow': '0 2px 4px rgba(0,0,0,0.5)'
-       }">
+          'color': 'white',
+          'border-radius': '8px',
+          'padding': '1rem',
+          'margin-bottom': '1rem',
+          'box-shadow': '0 2px 4px rgba(0,0,0,0.5)'
+        }">
 
     <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-      <strong>{{ carrito_producto.producto.nombre }}</strong>
-      <span>${{ carrito_producto.producto.precio }}</span>
+      <strong>{{ carrito_producto.skin.nombre_skin }}</strong>
+      <span>${{ carrito_producto.skin.precio }}</span>
     </div>
 
-    <div style="margin-bottom:0.5rem;">Cantidad: </div>
+    <div style="margin-bottom:0.5rem;">Cantidad: {{ carrito_producto.cantidad }} </div>
 
     <div style="display:flex; gap:0.5rem;">
       <p-button
         icon="pi pi-plus"
         styleClass="p-button-success"
         [style]="{'flex': '1'}"
-        (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.producto.id!)">
+        (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin!)">+
       </p-button>
 
       <p-button
         icon="pi pi-minus"
         styleClass="p-button-danger"
         [style]="{'flex': '1'}"
-        (click)="eliminarProductoDelCarrito(carrito_producto.producto.id!)">
+        (click)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin!)">-
       </p-button>
     </div>
   </div>

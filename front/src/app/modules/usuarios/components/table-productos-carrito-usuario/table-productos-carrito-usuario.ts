@@ -50,8 +50,9 @@ export class TableProductosCarritoUsuario {
       {
         next: (carrito: Carrito) => {
           this.carrito = carrito;
+          console.log('Carrito obtenido:', this.carrito);
           this.productos = this.carrito?.carrito_producto || [];
-          this.productos = this.productos.sort((a, b) => a.producto.nombre.localeCompare(b.producto.nombre));
+          this.productos = this.productos.sort((a, b) => a.skin.nombre_skin.localeCompare(b.skin.nombre_skin));
           this.totalCarrito = this.obtenerTotalDelCarrito(this.productos);
 
         },
@@ -66,7 +67,7 @@ export class TableProductosCarritoUsuario {
   }
 
   obtenerTotalDelCarrito(productosCarrito: Carrito_Producto[]): number {
-    const total = productosCarrito.reduce((total, item) => total + (item.producto.precio * item.cantidad), 0);
+    const total = productosCarrito.reduce((total, item) => total + (item.skin.precio * item.cantidad), 0);
     return Number(total.toFixed(2));
   }
 

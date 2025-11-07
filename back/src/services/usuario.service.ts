@@ -85,6 +85,10 @@ export class UsuarioService {
         return usuarioCreado;
     }
 
+    async crearCarritoParaUsuario(usuarioId: number) {
+        return await this.usuarioRepository.createCarrito(usuarioId);
+    }
+
     async verificarMail(token: string){
         return await this.usuarioRepository.verificarMail(token);
     }

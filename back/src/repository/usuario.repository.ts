@@ -61,6 +61,14 @@ export class UsuarioRepository{
         })
     }
 
+    async createCarrito(usuarioId: number) {
+        return await prisma.carrito.create({
+            data: {
+                usuario_id: usuarioId
+            }
+        });
+    }
+
     async updateUsuario(id_usuario:number,  usuario : Usuario){
         return await prisma.usuario.update({
             where : {id_usuario},
@@ -90,7 +98,7 @@ export class UsuarioRepository{
             include: {
                 carrito_producto: {  // Incluir los productos en el carrito
                     include: {
-                        producto: true,  // Traemos los detalles del producto
+                        skin: true,  // Traemos los detalles del skin
                     }
                 }
             }
@@ -110,7 +118,7 @@ export class UsuarioRepository{
         const productoEnCarrito = await prisma.carrito_producto.findFirst({
             where: {
                 carrito_id: carrito.id,
-                producto_id: productoAAgregar.productoId
+                skin_id: productoAAgregar.productoId
             }
         });
 
@@ -124,7 +132,7 @@ export class UsuarioRepository{
             return await prisma.carrito_producto.create({
                 data: {
                     carrito_id: carrito.id,
-                    producto_id: productoAAgregar.productoId,
+                    skin_id: productoAAgregar.productoId,
                     cantidad: 1
                 }
             });
@@ -144,7 +152,7 @@ export class UsuarioRepository{
         const productoEnCarrito = await prisma.carrito_producto.findFirst({
             where: {
                 carrito_id: carrito.id,
-                producto_id: productoAAgregar.productoId
+                skin_id: productoAAgregar.productoId
             }
         });
 

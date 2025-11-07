@@ -58,6 +58,7 @@ export class UsuarioController {
     }
 
     const usuario = await usuarioService.crearUsuario(newUsuario);
+    const carrito = await usuarioService.crearCarritoParaUsuario(usuario.id_usuario);
     res.status(201).json(usuario);
   } catch (error) {
     console.error("Error al crear usuario:", error);
