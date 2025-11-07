@@ -4,6 +4,10 @@ export interface Usuario {
   apellido: string;
   mail: string;
   password: string;
+  direccion: string;
+  localidad: string;
+  provincia: string;
+  pais: string;
   token?: string;
   rol?: string;
   verificado?: boolean;

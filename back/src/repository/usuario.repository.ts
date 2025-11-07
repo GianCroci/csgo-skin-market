@@ -1,4 +1,6 @@
+import {type ubicacion } from './../../node_modules/.prisma/client/index.js';
 import {type usuario } from './../../node_modules/.prisma/client/index.js';
+
 import type { Usuario } from "../models/usuario.model.js";
 import { prisma } from "../prisma.js";
 
@@ -24,6 +26,26 @@ export class UsuarioRepository{
         )
     }
 
+    async findUbicacion(id: number){
+        return await prisma.ubicacion.findUnique(
+            {
+                where: {id_ubicacion : id}
+                
+            }
+        )
+    }
+
+    async createUbicacion(ubicacion : { direccion: string; localidad: string; provincia: string; pais: string }){
+        return await prisma.ubicacion.create({
+            data : {
+                direccion: ubicacion.direccion!,
+                localidad: ubicacion.localidad!,
+                provincia: ubicacion.provincia!,
+                pais: ubicacion.pais!
+            }
+        })
+    }
+
     async createUsuario(usuario : Usuario){
         return await prisma.usuario.create({
             data: {
@@ -33,7 +55,8 @@ export class UsuarioRepository{
             password: usuario.password!,
             token: usuario.token!,
             rol: usuario.rol!,
-            verificado: usuario.verificado!
+            verificado: usuario.verificado!,
+            ubicacion_id: usuario.ubicacion_id!
         }
         })
     }

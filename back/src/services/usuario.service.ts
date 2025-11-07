@@ -1,3 +1,4 @@
+import {type ubicacion } from './../../node_modules/.prisma/client/index.js';
 import type { Usuario } from "../models/usuario.model.js";
 import type { UsuarioRepository } from "../repository/usuario.repository.js";
 import * as bcrypt from 'bcrypt';
@@ -36,7 +37,7 @@ export class UsuarioService {
     }
 
     async crearUsuario(usuarioData:Usuario){
-        const {nombre, apellido, mail, password} = usuarioData;
+        const {nombre, apellido, mail, password, direccion, localidad, provincia, pais} = usuarioData;
 
 
         if (!nombre) throw new Error('Nombre es requerido');
@@ -50,6 +51,15 @@ export class UsuarioService {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const token = Math.random().toString(36).substring(2, 2 + 10);
 
+        const ubicacion = {
+            direccion: direccion!,
+            localidad: localidad!,
+            provincia: provincia!,
+            pais: pais!
+        }
+
+        const ubicacionCreada = await this.usuarioRepository.createUbicacion(ubicacion);
+
         const usuario = {
             nombre: nombre,
             apellido: apellido,
@@ -58,7 +68,8 @@ export class UsuarioService {
             token: token,
             rol: 'usuario',
             verificado: false,
-            fechaIngreso: new Date()
+            fechaIngreso: new Date(),
+            ubicacion_id: ubicacionCreada.id_ubicacion
         };
 
 
@@ -93,6 +104,21 @@ export class UsuarioService {
     async login(mail: string, password: string){
         const usuario = await this.usuarioRepository.findUsuarioByMail(mail);
 
+        
+            console.log('=== DEBUG UBICACION ===');
+        console.log('usuario.ubicacion_id:', usuario?.ubicacion_id);
+        console.log('tipo:', typeof usuario?.ubicacion_id);
+
+        const ubicacion = await this.usuarioRepository.findUbicacion(Number(usuario?.ubicacion_id));
+
+        console.log('ubicacion resultado:', ubicacion);
+        console.log('=== FIN DEBUG ===');
+        
+        
+        
+        
+        
+
         if (!usuario) {
         throw new Error('Usuario no encontrado');
         }
@@ -113,13 +139,16 @@ export class UsuarioService {
                 mail: usuario.mail,
                 nombre: usuario.nombre,
                 apellido: usuario.apellido,
-                rol: usuario.rol
+                rol: usuario.rol,
+                provincia: ubicacion?.provincia,
+                pais: ubicacion?.pais
+                 
             },
             this.JWT_SECRET,
-            { expiresIn: '24h' } // Token expira en 24 horas
+            { expiresIn: '24h' } 
         );
 
-        // Retornar usuario Y token
+    
         return {
             token,
             usuario: {
@@ -127,7 +156,10 @@ export class UsuarioService {
                 nombre: usuario.nombre,
                 apellido: usuario.apellido,
                 mail: usuario.mail,
-                rol: usuario.rol
+                rol: usuario.rol,
+                provincia: ubicacion?.provincia,
+                pais: ubicacion?.pais
+                 
             }
 
 
