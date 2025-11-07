@@ -7,19 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuario {
-  id_usuario Int      @id @default(autoincrement())
-  nombre     String   @db.VarChar(100)
-  apellido   String   @db.VarChar(100)
-  mail       String   @unique @db.VarChar(150)
-  password   String   @db.VarChar(255)
-  token      String?  @unique(map: "token") @db.VarChar(255)
-  rol        String?  @default("usuario") @db.VarChar(50)
-  verificado Boolean? @default(false)
-
-  @@map("usuario")
-}
-
 model armas {
   id_arma     Int                 @id @default(autoincrement())
   nombre_arma String              @unique @db.VarChar(100)
@@ -37,6 +24,28 @@ model skins {
   armas        armas       @relation(fields: [id_arma_base], references: [id_arma], onDelete: Cascade, onUpdate: NoAction, map: "fk_arma")
 
   @@unique([id_arma_base, nombre_skin])
+}
+
+model ubicacion {
+  id_ubicacion Int       @id @default(autoincrement())
+  direccion    String    @db.VarChar(100)
+  localidad    String    @db.VarChar(100)
+  provincia    String    @db.VarChar(100)
+  pais         String    @db.VarChar(100)
+  usuario      usuario[]
+}
+
+model usuario {
+  id_usuario   Int        @id @default(autoincrement())
+  nombre       String     @db.VarChar(100)
+  apellido     String     @db.VarChar(100)
+  mail         String     @unique @db.VarChar(150)
+  password     String     @db.VarChar(255)
+  token        String?    @unique @db.VarChar(255)
+  rol          String?    @default("usuario") @db.VarChar(50)
+  verificado   Boolean?   @default(false)
+  ubicacion_id Int?
+  ubicacion    ubicacion? @relation(fields: [ubicacion_id], references: [id_ubicacion], onUpdate: NoAction)
 }
 
 enum tipo_categoria_arma {

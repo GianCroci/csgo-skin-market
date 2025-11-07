@@ -1,0 +1,17 @@
+.perfil-container{
+    display: flex;
+    align-items: center;
+}
+
+img{
+    width: 400px;
+}
+
+.perfil.img{
+    width: 30%;
+}
+
+.perfil-auto{
+    width: 70%;
+    margin: auto;
+}
