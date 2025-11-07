@@ -35,13 +35,23 @@ interface User {
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api';
   private readonly TOKEN_KEY = 'auth_token';
-  
+
+  // Signals para estado reactivo
   private userSignal = signal<User | null>(null);
   private isAuthSignal = signal<boolean>(false);
-  
+
+  // Exponer como readonly
   user = this.userSignal.asReadonly();
   isAuthenticated = this.isAuthSignal.asReadonly();
-  
+
+  // Computed para el nombre completo
+  fullName = computed(() => {
+    const user = this.userSignal();
+    return user ? `${user.nombre} ${user.apellido}` : '';
+  });
+
+
+
 
   constructor(
     private http: HttpClient,
@@ -54,16 +64,18 @@ export class AuthService {
   this.checkAuthStatus();
 }
 
-  
+
   login(mail: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.api_url}/usuario/login`, {mail, password})
       .pipe(
         tap(response => {
           if (response.success && response.token) {
-            
+
             localStorage.setItem(this.TOKEN_KEY, response.token);
-            
-            
+
+            // Actualizar estado
+
+
             this.userSignal.set(response.user);
             this.isAuthSignal.set(true);
           }
@@ -75,7 +87,7 @@ export class AuthService {
       );
   }
 
-  
+
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.userSignal.set(null);
@@ -83,24 +95,26 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  
+
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  
+
   private checkAuthStatus(): void {
     const token = this.getToken();
-    
+
     if (token) {
-      
+
       try {
         const payload = this.decodeToken(token);
-        
-      
+
+        // Verificar si el token no ha expirado
+
+
         if (payload.exp * 1000 > Date.now()) {
           this.userSignal.set({
-            id: payload.id,
+            id: payload.id_usuario,
             nombre: payload.nombre,
             apellido: payload.apellido,
             mail: payload.mail,
@@ -111,7 +125,7 @@ export class AuthService {
           });
           this.isAuthSignal.set(true);
         } else {
-          
+
           this.logout();
         }
       } catch (error) {

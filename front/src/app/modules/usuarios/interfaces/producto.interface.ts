@@ -4,7 +4,7 @@
   descripcion: string;
   clasificacion: string;
   precio: number;
-  imagen: string;
+  imagenUrl: string;
   stock: number;
 }*/
 

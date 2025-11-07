@@ -52,7 +52,8 @@ export const usuariosRoutes: Routes = [
       },
       {
         path: 'carrito-usuario',
-        component: ProductosCarritoUsuario
+        component: ProductosCarritoUsuario,
+        canActivate: [authGuard]
       },
       {
 

@@ -1,17 +1,24 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { ProductRow } from './product-row/product-row';
 import { Carousel } from './carousel/carousel';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import {UsuariosService} from '../../api/services/usuarios/usuarios.service';
+import {AuthService} from '../../api/services/auth.service';
+import {MessageService} from 'primeng/api';
+import {Toast} from 'primeng/toast';
 import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
 import { SkinsService } from '../../api/services/skins/skins.service';
 import { Subscription } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, ProductRow, ButtonModule],
+  imports: [CommonModule, ProductRow, ButtonModule, Carousel, Toast],
   templateUrl: './home.html',
   styleUrl: './home.css',
+  providers: [MessageService]
 })
 export class Home implements OnInit, OnDestroy{
 
@@ -19,7 +26,15 @@ export class Home implements OnInit, OnDestroy{
   private skinService= inject(SkinsService);
   private skinSubscription?: Subscription;
 
-  // Lista para el carrusel
+  usuarioService = inject(UsuariosService);
+  authService = inject(AuthService);
+  messageService = inject(MessageService);
+
+  idUsuario!: number;
+
+
+
+
   productosDestacados: Producto[] = [];
   productosak47: Producto[] = [];
   productosSMG: Producto[] = [];
@@ -31,7 +46,7 @@ export class Home implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
-
+    this.idUsuario = this.authService.user()?.id!;
     this.cargarTodasLasSkins();
   }
 
@@ -42,9 +57,24 @@ export class Home implements OnInit, OnDestroy{
   onAgregarProducto(producto: Producto) {
     // Agregar producto a carrito
     console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre_skin);
+    this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, { productoId: producto.id_skin }).subscribe({
+        next: () => {
+          // Actualiza la vista, por ejemplo, vuelve a cargar el carrito
+          console.log('Producto agregado correctamente');
+        },
+        error: () => {
+          console.error('Error al agregar el producto');
+        },
+        complete: () => {
+          this.showBottomRight()
+          // Opcional: lógica al terminar la petición
+        }
+      }
+    )
+
   }
 
-  cargarTodasLasSkins():void 
+  cargarTodasLasSkins():void
   {
     this.skinSubscription= this.skinService.listSkins().subscribe({
 
@@ -61,6 +91,16 @@ export class Home implements OnInit, OnDestroy{
     });
   }
 
+  showBottomRight() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Producto agregado correctamente',
+      detail: 'El producto ha sido añadido a tu carrito de compras.',
+      key: 'br',
+      life: 3000
+    });
+  }
+
   filtrarSkinsParaRows(){
 
 
@@ -71,7 +111,7 @@ export class Home implements OnInit, OnDestroy{
     this.productosRiflesAWP= this.skins.filter(skin=>
       skin.id_arma_base == 2
     );
-    
+
     this.productosCuchillos= this.skins.filter(skin=>
       skin.id_arma_base == 3
     );
@@ -97,6 +137,6 @@ export class Home implements OnInit, OnDestroy{
   verTodosLosProductos(){
 
   }
-  
+
 
 }

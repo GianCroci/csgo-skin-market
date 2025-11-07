@@ -85,6 +85,10 @@ export class UsuarioService {
         return usuarioCreado;
     }
 
+    async crearCarritoParaUsuario(usuarioId: number) {
+        return await this.usuarioRepository.createCarrito(usuarioId);
+    }
+
     async verificarMail(token: string){
         return await this.usuarioRepository.verificarMail(token);
     }
@@ -166,5 +170,21 @@ export class UsuarioService {
         
     }
 
+    }
+
+    async getProductosDelCarritoDeUnUsuario(id: number) {
+        return await this.usuarioRepository.getProductosDelCarritoDeUnUsuario(id);
+    }
+
+    async postAgregarProductoAlCarrito(productoAAgregar: any) {
+        return await this.usuarioRepository.postAgregarProductoAlCarrito(productoAAgregar);
+    }
+
+    async postBorrarProductoDelCarrito(productoABorrar: { productoId: any; usuarioId: number }) {
+        return await this.usuarioRepository.postBorrarProductoDelCarrito(productoABorrar);
+    }
+
+    async postVaciarCarrito(usuarioId: number) {
+        return await this.usuarioRepository.postVaciarCarrito(usuarioId);
     }
 }

@@ -1,4 +1,3 @@
-import {type ubicacion } from './../../node_modules/.prisma/client/index.js';
 export class Usuario {
   id?: number;
   nombre?: string;
