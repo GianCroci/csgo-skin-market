@@ -16,7 +16,7 @@ export class MiCuenta {
   authService = inject(AuthService);
   usuario = signal<Usuario | null>(null)
 
-  imagenUrl = 'img/perfil-chem.png'
+  imagenUrl = 'images/skins/perfil-chem.png'
 
   constructor() {
     effect(() => {

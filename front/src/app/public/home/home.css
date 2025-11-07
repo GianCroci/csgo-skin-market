@@ -1,7 +1,7 @@
 /* Estilo para el Hero Banner */
 .hero-section {
   height: 40vh; /* 40% de la altura de la pantalla */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/csgo-banner.png'); /* CAMBIA 'csgo-banner.jpg' por tu imagen */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/skins/csgo-banner.png'); /* CAMBIA 'csgo-banner.jpg' por tu imagen */
   background-size: cover;
   background-position: center;
   border-radius: 12px;
