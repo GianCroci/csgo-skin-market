@@ -1,17 +1,38 @@
 <app-video-background>
 <div class="perfil-container">
-<div class="perfil-img">
-  <img [src]="imagenUrl" alt="perfil">
-</div>
-<div>
-@if (usuario(); as user) {
-    <div class="perfil-info">
-        <h1>Nombre: {{user.nombre}} {{user.apellido}}</h1>
-        <p>Mail: {{user.mail}}</p>
-        <p>Provincia: {{user.provincia}}</p>
-        <p>Pais: {{user.pais}}</p>
-    </div>
-}
-</div>
+  <div class="perfil-img">
+    <img [src]="imagenUrl" alt="perfil">
+  </div>
+  <div class="info-container">
+  @if (usuario(); as user) {
+      <div class="perfil-info">
+          <h1>Nombre: {{user.nombre}} {{user.apellido}}</h1>
+          <p>Mail: {{user.mail}}</p>
+          <p>Provincia: {{user.provincia}}</p>
+          <p>Pais: {{user.pais}}</p>
+      </div>
+      <div class="carousel-container">
+        <h2>Mis skins</h2>
+        <p-carousel 
+          class="carousel"
+          [value]="skins" 
+          [numVisible]="3" 
+          [numScroll]="1" 
+          [circular]="true" 
+          [autoplayInterval]="5000">
+          <ng-template pTemplate="item" let-skin>
+              <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
+                  <div class="mb-4">
+                      <div class="relative mx-auto card">
+                          <img [src]="skin.img" [alt]="skin.name" class="w-full rounded-border skin-img" />
+                      </div>
+                  </div>
+                  <div class="mb-4 font-medium">{{ skin.name }}</div>
+              </div>
+          </ng-template>
+      </p-carousel>
+      </div>
+  }
+  </div>
 </div>
 </app-video-background>
