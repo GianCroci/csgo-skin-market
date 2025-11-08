@@ -15,11 +15,12 @@ export interface Producto {
   rareza:       string;
   precio:       number;
   url_imagen:   string;
-  
+  descripcion?: string;
+
   armas: {
     id_arma:   number;
     nombre_arma: string;
-    categoria: string; 
+    categoria: string;
   };
-  
+
 }

@@ -22,8 +22,7 @@
         <p-tag [value]="prod.rareza" severity="info"></p-tag>
 
         <p class="product-description">
-          Descripción del producto, ver si lo agregamos a la BD.
-          Es una skin de tipo {{ prod.categoria }} muy buscada.
+          {{ prod.descripcion || 'Sin descripción disponible para este objeto.' }}
         </p>
 
         <div class="price-tag">
