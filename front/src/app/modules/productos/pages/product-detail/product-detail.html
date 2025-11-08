@@ -1,0 +1,49 @@
+<div class="detail-container">
+
+  @if (producto(); as prod) {
+
+    <div class="mb-4">
+      <p-button
+        label="Volver"
+        icon="pi pi-arrow-left"
+        [text]="true"
+        (click)="goBack()">
+      </p-button>
+    </div>
+
+    <div class="product-grid">
+      <div class="image-section">
+        <img [src]="prod.url_imagen" [alt]="prod.nombre_skin" class="main-image">
+      </div>
+
+      <div class="info-section">
+        <h1 class="product-title">{{ prod.nombre_skin }}</h1>
+
+        <p-tag [value]="prod.rareza" severity="info"></p-tag>
+
+        <p class="product-description">
+          Descripción del producto, ver si lo agregamos a la BD.
+          Es una skin de tipo {{ prod.categoria }} muy buscada.
+        </p>
+
+        <div class="price-tag">
+          {{ prod.precio | currency:'USD' }}
+        </div>
+
+        <p-button
+          label="Agregar al carrito"
+          icon="pi pi-shopping-cart"
+          size="large"
+          class="w-full mt-4"
+          (click)="agregarAlCarrito()">
+        </p-button>
+      </div>
+    </div>
+
+  } @else {
+    <p class="loading-text">Cargando detalles del producto...</p>
+  }
+
+  <p-toast position="bottom-right"></p-toast>
+
+</div>

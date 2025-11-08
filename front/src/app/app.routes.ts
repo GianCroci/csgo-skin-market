@@ -25,6 +25,10 @@ export const routes: Routes = [
         component: Home,
     },
     {
+      path: 'skins/:id',
+      loadComponent: () => import('./modules/productos/pages/product-detail/product-detail').then(m => m.ProductDetail)
+    },
+    {
         path: 'usuarios',
         loadChildren: () => import('./modules/usuarios/usuarios.routes').then(u => u.usuariosRoutes)
     },

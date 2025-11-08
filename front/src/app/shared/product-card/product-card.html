@@ -1,7 +1,18 @@
-<p-card [header]="producto.nombre_skin" [subheader]="producto.rareza" styleClass="product-card">
+<p-card [subheader]="producto.rareza" styleClass="product-card">
 
   <ng-template pTemplate="header">
-    <img [src]="producto.url_imagen" [alt]="producto.nombre_skin" class="product-image">
+    <img
+      [src]="producto.url_imagen"
+      [alt]="producto.nombre_skin"
+      class="product-image cursor-pointer"
+      [routerLink]="['/skins', producto.id_skin]"> </ng-template>
+
+  <ng-template pTemplate="title">
+    <span
+      class="cursor-pointer hover:text-primary transition-colors"
+      [routerLink]="['/skins', producto.id_skin]">
+      {{ producto.nombre_skin }}
+    </span>
   </ng-template>
 
   <ng-template pTemplate="content">
