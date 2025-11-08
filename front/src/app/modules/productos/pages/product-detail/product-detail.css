@@ -6,7 +6,7 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: start;
 }
@@ -15,8 +15,8 @@
   width: 100%;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Sombra "gamer" */
-  background-color: #2a2a2e; /* Fondo oscuro por si la imagen es PNG transparente */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  background-color: #2a2a2e;
 }
 
 .product-title {
@@ -34,7 +34,7 @@
 .price-tag {
   font-size: 3rem;
   font-weight: bold;
-  color: #4ade80; /* Tu verde gamer */
+  color: #4ade80;
   margin-bottom: 2rem;
 }
 
@@ -43,4 +43,26 @@
   font-size: 1.5rem;
   color: #ccc;
   margin-top: 5rem;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media screen and (max-width: 768px) {
+
+  .product-grid {
+
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .product-title {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  .price-tag {
+    font-size: 2.5rem;
+  }
+
+  .image-section { text-align: center; }
+  .main-image { max-width: 80%; margin: 0 auto; }
 }

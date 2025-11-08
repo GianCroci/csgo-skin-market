@@ -137,14 +137,13 @@ export class Home implements OnInit, OnDestroy{
     );
 
 
-    /*
-    this.productosDestacados= this.skins.(
-      sort((a, b) => b.precio - a.precio) // Ordenamos de mayor a menor precio
-      .slice(0, 10); // Tomamos los primeros 10');
-  */
+
+    this.productosDestacados = [...this.skins]
+      .sort((a, b) => Number(b.precio) - Number(a.precio))
+      .slice(0, 6);
     this.productosSMG= this.skins.filter(skin=>
     skin.armas && skin.armas.categoria ==='SMG');
-  }
+    }
 
   verTodosLosProductos(){
 
