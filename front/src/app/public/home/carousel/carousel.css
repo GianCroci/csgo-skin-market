@@ -7,3 +7,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   position: relative;
 }
+
+.carousel-item-wrapper {
+  padding: 0 0.75rem;
+}
