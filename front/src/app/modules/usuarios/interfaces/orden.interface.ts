@@ -5,7 +5,6 @@ export interface Orden {
   fecha: Date;
   estado: string;
   pago: string;
-  envio: string;
   total: number;
   productos: Producto[];
 }

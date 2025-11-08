@@ -1,4 +1,4 @@
-import {type usuario } from './../../node_modules/.prisma/client/index.js';
+
 
 import { type Request, type Response } from "express";
 import { UsuarioService } from "../services/usuario.service.js";
