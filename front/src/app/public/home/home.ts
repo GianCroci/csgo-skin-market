@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, effect, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import { ProductRow } from './product-row/product-row';
 import { Carousel } from './carousel/carousel';
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +10,7 @@ import {Toast} from 'primeng/toast';
 import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
 import { SkinsService } from '../../api/services/skins/skins.service';
 import { Subscription } from 'rxjs';
+import { Usuario } from '../../../../../back/src/models/usuario.model';
 
 
 
@@ -28,10 +29,19 @@ export class Home implements OnInit, OnDestroy{
 
   usuarioService = inject(UsuariosService);
   authService = inject(AuthService);
+  usuario = signal<Usuario | null>(null)
   messageService = inject(MessageService);
 
-  idUsuario!: number;
+  constructor() {
+    effect(() => {
+      const user = this.authService.user();
+      if (user) {
+        this.usuario.set(user);
+      }
+    });
+  }
 
+  idUsuario!: number;
 
 
 
@@ -46,7 +56,8 @@ export class Home implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
-    this.idUsuario = this.authService.user()?.id!;
+    //this.idUsuario = this.authService.user()?.id!;
+    this.authService.recargarUsuario();
     this.cargarTodasLasSkins();
   }
 
@@ -56,6 +67,7 @@ export class Home implements OnInit, OnDestroy{
 
   onAgregarProducto(producto: Producto) {
     // Agregar producto a carrito
+    this.idUsuario = this.authService.user()?.id!;
     console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre_skin);
     this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, { productoId: producto.id_skin }).subscribe({
         next: () => {

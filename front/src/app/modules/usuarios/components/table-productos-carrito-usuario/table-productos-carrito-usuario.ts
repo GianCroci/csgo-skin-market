@@ -8,6 +8,7 @@ import {Carrito} from '../../interfaces/carrito.interface';
 import {Carrito_Producto} from '../../interfaces/carrito_producto.interface';
 import {UsuariosService} from '../../../../api/services/usuarios/usuarios.service';
 import { AuthService } from '../../../../api/services/auth.service';
+import { ProgressSpinner } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-table-productos-carrito-usuario',
@@ -17,8 +18,9 @@ import { AuthService } from '../../../../api/services/auth.service';
     TableModule,
     RouterLink,
     CommonModule,
-    ButtonDirective
-  ],
+    ButtonDirective,
+    ProgressSpinner
+],
   templateUrl: './table-productos-carrito-usuario.html',
   styleUrl: './table-productos-carrito-usuario.css',
 })
@@ -27,14 +29,14 @@ export class TableProductosCarritoUsuario {
   mostrarModalVaciar = false;
   mostrarModalPagar = false;
   procesando = false;
-  procesoCompletado = false;
   usuarioService = inject(UsuariosService);
   activatedRouter = inject(ActivatedRoute)
   authService = inject(AuthService);
   productos: Carrito_Producto[] = [];
   totalCarrito: number = 0;
   idUsuario!: number;
-
+  mostrarSpinner:boolean = false;
+  procesoCompletado:boolean = false;
 
   ngOnInit(): void {
     this.idUsuario = this.authService.user()?.id!;
@@ -135,12 +137,16 @@ export class TableProductosCarritoUsuario {
   }
 
   pagarCarrito() {
-    this.procesando = true;
+    this.mostrarSpinner = true;
     this.procesoCompletado = false;
+    console.log(this.mostrarSpinner)
     this.usuarioService.vaciarCarrito(this.idUsuario).subscribe({
       next: () => {
-        this.procesando = false;
+        setTimeout(() => {  // opcional, para que se vea el spinner 1s
+        this.mostrarSpinner = false;
         this.procesoCompletado = true;
+        this.listProductosCarritoUsuario();
+      }, 2500);
         // Opcional: actualiza la vista
       },
       error: () => {
@@ -148,15 +154,13 @@ export class TableProductosCarritoUsuario {
         // Maneja el error
       },
       complete: () => {
-        // Opcional: lógica al terminar la petición
-        this.listProductosCarritoUsuario();
       }
     });
   }
 
   pagarCarritoConfirmacion() {
     this.mostrarModalPagar = true;
-    this.procesando = false;
+    this.mostrarSpinner = false;
     this.procesoCompletado = false;
   }
 
