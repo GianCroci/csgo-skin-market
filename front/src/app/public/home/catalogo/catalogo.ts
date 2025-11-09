@@ -136,7 +136,7 @@ export class Catalogo implements OnInit, OnDestroy {
 
   private saveFiltersToStorage(): void {
     try {
-      localStorage.setItem(this.FILTER_STORAGE_KEY, JSON.stringify(this.filters));
+      sessionStorage.setItem(this.FILTER_STORAGE_KEY, JSON.stringify(this.filters));
     } catch (error) {
       console.error('Error guardando filtros:', error);
     }
@@ -144,7 +144,7 @@ export class Catalogo implements OnInit, OnDestroy {
 
   private loadFiltersFromStorage(): void {
     try {
-      const stored = localStorage.getItem(this.FILTER_STORAGE_KEY);
+      const stored = sessionStorage.getItem(this.FILTER_STORAGE_KEY);
       if (stored) {
         this.filters = JSON.parse(stored);
       }
