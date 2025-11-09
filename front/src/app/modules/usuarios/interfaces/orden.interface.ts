@@ -1,10 +1,9 @@
 import { Producto } from './producto.interface';
 
 export interface Orden {
-  id?: number;
+  id_orden?: number;
   fecha: Date;
   estado: string;
-  pago: string;
   total: number;
   productos: Producto[];
 }
