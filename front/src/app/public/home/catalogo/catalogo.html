@@ -1,8 +1,26 @@
+<div class="catalogo-container">
+  
+  <h1 class="catalogo-title">Catálogo Completo de Skins</h1>
 
-<app-product-row
+  <div class="product-grid">
 
+    @for (producto of skinsEnPaginaActual; track producto.id_skin) {
+      
+      <app-product-card
+        [producto]="producto"
+        (productoAgregado)="onAgregarProducto($event)">
+      </app-product-card>
 
+    } @empty {
+      <p>Cargando skins o no se encontraron productos...</p>
+    }
+  </div>
 
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [rows]="rows"
+    [totalRecords]="totalRec"
+  >
+  </p-paginator>
 
->
-</app-product-row>
+</div>
