@@ -8,6 +8,7 @@ import {VerificarMail} from './pages/verificar-mail/verificar-mail';
 import {Login} from './pages/login/login';
 import {authGuard} from '../../api/guards/auth.guard';
 import {ProductosCarritoUsuario} from './pages/productos-carrito-usuario/productos-carrito-usuario';
+import { Catalogo } from '../../public/home/catalogo/catalogo';
 
 
 export const usuariosRoutes: Routes = [
