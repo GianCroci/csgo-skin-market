@@ -1,0 +1,25 @@
+.login-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    margin-top: 100px;
+    flex-direction: column;
+    justify-content: center;
+}
+form{
+    margin: auto;
+    text-align: center;
+    border: 2px solid gray;
+    border-radius: 5%;
+    padding: 20px;
+}
+div{
+    margin: 5px;
+    
+}
+input{
+    width: 97.5%;
+}
+h1{
+    text-align: center;
+}

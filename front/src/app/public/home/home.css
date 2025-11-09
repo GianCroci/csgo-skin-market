@@ -1,7 +1,7 @@
-/* Estilo para el Hero Banner */
+/* Hero Banner */
 .hero-section {
-  height: 40vh; /* 40% de la altura de la pantalla */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/img/csgo-banner.png'); /* CAMBIA 'csgo-banner.jpg' por tu imagen */
+  height: 40vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/skins/csgo-banner.png'); /* CAMBIA 'csgo-banner.jpg' por tu imagen */
   background-size: cover;
   background-position: center;
   border-radius: 12px;
@@ -10,72 +10,68 @@
   justify-content: center;
   text-align: center;
   padding: 2rem;
-  margin-bottom: 3rem; /* Espacio para separar del carrusel */
+  margin-bottom: 3rem;
 }
 
 .hero-content h1 {
   font-size: 3rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* Sombra para que se lea bien */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
 }
 
 .hero-content p {
   font-size: 1.25rem;
-  color: #ccc; /* Un color gris claro */
+  color: #ccc;
 }
 
-/* Estilo para los títulos de sección (ej. "Destacados") */
+/* títulos de sección*/
 .section-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  border-bottom: 2px solid #4ade80; /* Línea verde (como el precio) */
+  border-bottom: 2px solid #4ade80;
   padding-bottom: 0.5rem;
-  display: inline-block; /* Para que el borde no ocupe todo el ancho */
+  display: inline-block;
 }
 
 /* Espacio entre las filas de productos */
 app-product-row {
-  display: block; /* Necesario para que el margin funcione */
+  display: block;
   margin-bottom: 2rem;
 }
 
 
-/* La "barra" contenedora para tu botón principal */
+
 .ver-todos-container {
   display: flex;
-  justify-content: center; /* ¡Centra el botón horizontalmente! */
+  justify-content: center;
   align-items: center;
   width: 100%;
 
-  /* Espacio para separarlo de las filas de productos */
   padding: 3rem 0;
   margin-top: 2rem;
 
-  /* Una línea superior sutil para darle su propio espacio */
-  border-top: 1px solid #4b5563; /* Un gris de tu tema oscuro */
+  border-top: 1px solid #4b5563;
 }
 
 
-/* 1. La "caja" contenedora del botón */
 .ver-todos-container {
   display: flex;
-  flex-direction: column; /* Pone el título arriba y el botón abajo */
+  flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centra todo */
+  align-items: center;
   width: 100%;
 
   padding: 3rem 1.5rem;
   margin-top: 3rem;
 
-  /* Estilos para destacar la "caja" */
-  background-color: #2a2a2e; /* El mismo gris oscuro del carrusel */
+  background-color: #2a2a2e;
   border-radius: 12px;
-  border: 1px solid #4ade80; /* Un borde verde "gamer" */
+  border: 1px solid #4ade80;
 }
 
-/* 2. El título que acabamos de agregar */
+
 .cta-title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -84,21 +80,18 @@ app-product-row {
   padding-bottom: 1.5rem;
 }
 
-/* 3. Hacemos el botón MÁS GRANDE y lo ANIMAMOS
+/* botón MÁS GRANDE y lo ANIMAMOS
   Usamos ::ng-deep para anular los estilos de PrimeNG
 */
 :host ::ng-deep .cta-button {
-  /* Hacemos el botón más grande que "large" */
   padding: 1rem 2rem !important;
   font-size: 1.15rem !important;
   font-weight: 700 !important;
 
-  /* Animación de "pulso" para llamar la atención */
   animation: pulse-animation 2s infinite;
-  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); /* Sombra inicial */
+  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
 }
 
-/* 4. Definición de la animación */
 @keyframes pulse-animation {
   0% {
     transform: scale(1);
@@ -106,10 +99,49 @@ app-product-row {
   }
   70% {
     transform: scale(1);
-    box-shadow: 0 0 0 15px rgba(74, 222, 128, 0); /* La sombra se expande y desaparece */
+    box-shadow: 0 0 0 15px rgba(74, 222, 128, 0);
   }
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media screen and (max-width: 768px) {
+  .hero-section {
+    height: 30vh;
+    padding: 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Celulares  */
+@media screen and (max-width: 480px) {
+  .hero-section {
+    height: 25vh;
+    margin-bottom: 2rem;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Ajustamos el botón de "Ver Todos" para que no sea gigante en celular */
+  :host ::ng-deep .cta-button {
+     padding: 0.8rem 1.5rem !important;
+     font-size: 1rem !important;
+     width: 100%;
   }
 }

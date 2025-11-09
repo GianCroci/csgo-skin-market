@@ -7,17 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model usuario {
-  id_usuario Int      @id @default(autoincrement())
-  nombre     String   @db.VarChar(100)
-  apellido   String   @db.VarChar(100)
-  mail       String   @unique @db.VarChar(150)
-  password   String   @db.VarChar(255)
-  token      String?  @unique(map: "token") @db.VarChar(255)
-  rol        String?  @default("usuario") @db.VarChar(50)
-  verificado Boolean? @default(false)
+model carrito {
+  id             Int       @id @default(autoincrement())
+  usuario_id     Int       @unique // El 'id_usuario' del usuario
+  fecha_creacion DateTime? @default(now()) @db.Timestamp(6)
+  usuario usuario @relation(fields: [usuario_id], references: [id_usuario], onDelete: Cascade, onUpdate: Cascade)
+  carrito_producto carrito_producto[]
+  @@map("carrito")
+}
 
-  @@map("usuario")
+model carrito_producto {
+  id         Int  @id @default(autoincrement())
+  carrito_id Int
+  skin_id    Int
+  cantidad   Int? @default(1)
+  carrito carrito @relation(fields: [carrito_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  skin    skins   @relation(fields: [skin_id], references: [id_skin])
+  @@map("carrito_producto")
 }
 
 model armas {
@@ -34,10 +40,36 @@ model skins {
   rareza       tipo_rareza
   precio       Decimal     @default(0.00) @db.Decimal(10, 2)
   url_imagen   String      @db.VarChar(255)
+  descripcion  String? @db.VarChar(1000)
   armas        armas       @relation(fields: [id_arma_base], references: [id_arma], onDelete: Cascade, onUpdate: NoAction, map: "fk_arma")
-
+  carrito_producto carrito_producto[]
   @@unique([id_arma_base, nombre_skin])
 }
+
+model ubicacion {
+  id_ubicacion Int       @id @default(autoincrement())
+  direccion    String    @db.VarChar(100)
+  localidad    String    @db.VarChar(100)
+  provincia    String    @db.VarChar(100)
+  pais         String    @db.VarChar(100)
+  usuario      usuario[]
+}
+
+model usuario {
+  id_usuario   Int        @id @default(autoincrement())
+  nombre       String     @db.VarChar(100)
+  apellido     String     @db.VarChar(100)
+  mail         String     @unique @db.VarChar(150)
+  password     String     @db.VarChar(255)
+  token        String?    @unique @db.VarChar(255)
+  rol          String?    @default("usuario") @db.VarChar(50)
+  verificado   Boolean?   @default(false)
+  ubicacion_id Int?
+  carrito      carrito?   
+  ubicacion    ubicacion? @relation(fields: [ubicacion_id], references: [id_ubicacion], onUpdate: NoAction)
+  ordenes      ordenes[]
+}
+
 
 enum tipo_categoria_arma {
   Rifle
@@ -56,4 +88,14 @@ enum tipo_rareza {
   Legendaria
   Antigua
   Contrabando
+}
+
+model ordenes {
+  id_orden   Int      @id @default(autoincrement())
+  id_usuario Int
+  fecha      DateTime @default(now())
+  estado     String   @db.VarChar(50)
+  total      Decimal  @db.Decimal(10, 2)
+  skins_ids  Int[]
+  usuario    usuario  @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
 }

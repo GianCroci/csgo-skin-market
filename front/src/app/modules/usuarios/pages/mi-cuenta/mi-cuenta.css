@@ -1,0 +1,42 @@
+.perfil-container{
+    display: flex;
+    align-items: center;
+    width: 100vh;
+}
+
+.perfil-img img{
+    width: 400px;
+    filter: drop-shadow(0rem 0.1rem 0.8rem rgba(193, 190, 190, 0.5));
+}
+
+
+
+.info-container{
+    display: flex;
+    flex-direction: column;
+    width: 100vh;
+}
+
+.carousel{
+  display: block;
+  background-color: #2a2a2e;
+  border-radius: 12px;
+  padding: 2rem 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  height: 300px;
+  width: 100%;
+  
+}
+
+.skin-img{
+    width: 200px;
+}
+
+@media (max-width: 639px) {
+    .perfil-container {
+        flex-direction: column;
+    }
+    img{
+        width: 100%;
+    }
+}

@@ -3,21 +3,19 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-product-card',
-  imports: [CommonModule, CardModule, ButtonModule],
+  imports: [CommonModule, CardModule, ButtonModule,RouterModule],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
 export class ProductCard  {
 
-  // @Input() permite que el componente PADRE (Home, Carousel, etc.)
-  // le pase la información del producto.
-  @Input() producto: Producto = {} as Producto  
-// @Output() permite que este componente HIJO le "avise" al PADRE
-  // que algo pasó (ej. el usuario hizo clic en "Agregar").
+  @Input() producto: Producto = {} as Producto
+
   @Output() productoAgregado = new EventEmitter<any>();
 
   agregarAlCarrito() {

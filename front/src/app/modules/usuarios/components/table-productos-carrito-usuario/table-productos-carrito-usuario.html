@@ -1,8 +1,9 @@
 <a [routerLink]="['/home']" style="display:inline-block; margin-bottom:1rem;">Home</a>
 
 <!-- Desktop Table -->
-<div class="desktop-only"  >
-  <p-table *ngIf="productos.length > 0"  [value]="productos" [responsiveLayout]="'scroll'" [tableStyle]="{ width: '100%' }">
+<div class="desktop-only">
+  <p-table *ngIf="productos.length > 0" [value]="productos" [responsiveLayout]="'scroll'"
+    [tableStyle]="{ width: '100%' }">
     <ng-template #header>
       <tr>
         <th style="min-width:150px">Nombre</th>
@@ -16,93 +17,79 @@
 
     <ng-template #body let-carrito_producto>
       <tr>
-        <td style="min-width:150px">{{ carrito_producto.nombre }}</td>
+        <td style="min-width:150px">{{ carrito_producto.skin.nombre_skin }}</td>
         <td>
-          <img
-            [src]="carrito_producto.imagenUrl"
-            [alt]="carrito_producto.nombre"
-            class="w-24 rounded responsive-img"
-          />
+          <img [src]="carrito_producto.skin.url_imagen" [alt]="carrito_producto.skin.nombre_skin"
+            class="w-24 rounded responsive-img" />
         </td>
-        <td style="min-width:100px">${{ carrito_producto.precio  }}</td>
-        <td style="min-width:100px">{{ carrito_producto.cantidad }}</td>
+        <td style="min-width:100px">${{carrito_producto.skin.precio}}</td>
+        <td style="min-width:100px">{{carrito_producto.cantidad}}</td>
         <td style="min-width:120px; text-align:center;">
-          <p-button
-            icon="pi pi-plus"
-            styleClass="p-button-success"
-            >
+          <p-button icon="pi pi-plus" styleClass="p-button-success"
+            (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin)">+
           </p-button>
         </td>
         <td style="min-width:140px; text-align:center;">
-          <p-button
-            icon="pi pi-minus"
-            styleClass="p-button-danger"
-            >
+          <p-button icon="pi pi-minus" styleClass="p-button-danger"
+            (onClick)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin)">-
           </p-button>
         </td>
       </tr>
     </ng-template>
+
   </p-table>
+</div>
+
+<div *ngIf="productos.length === 0">
+  <h2>Tu carrito está vacío 🔫</h2>
 </div>
 
 <!-- Mobile Cards -->
 <div class="mobile-only" *ngIf="productos.length > 0">
-  <div *ngFor="let carrito_producto of productos"
-       [ngStyle]="{
-         'background-image': 'url(' + carrito_producto.imagenUrl + ')',
-         'background-size': 'cover',
-         'background-position': 'center',
-         'width': '100%',
+  <div *ngFor="let carrito_producto of productos" [ngStyle]="{
+          'background-image': 'url(' + carrito_producto.skin.url_imagen + ')',
+          'background-size': 'cover',
+          'background-position': 'center',
+          'width': '100%',
           'height': '220px',
-         'color': 'white',
-         'border-radius': '8px',
-         'padding': '1rem',
-         'margin-bottom': '1rem',
-         'box-shadow': '0 2px 4px rgba(0,0,0,0.5)'
-       }">
+          'color': 'white',
+          'border-radius': '8px',
+          'padding': '1rem',
+          'margin-bottom': '1rem',
+          'box-shadow': '0 2px 4px rgba(0,0,0,0.5)'
+        }">
 
     <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-      <strong>{{ carrito_producto.nombre }}</strong>
-      <span>${{ carrito_producto.precio }}</span>
+      <strong>{{ carrito_producto.skin.nombre_skin }}</strong>
+      <span>${{ carrito_producto.skin.precio }}</span>
     </div>
 
-    <div style="margin-bottom:0.5rem;">Cantidad: {{ carrito_producto.cantidad }}</div>
+    <div style="margin-bottom:0.5rem;">Cantidad: {{ carrito_producto.cantidad }} </div>
 
     <div style="display:flex; gap:0.5rem;">
-      <p-button
-        icon="pi pi-plus"
-        styleClass="p-button-success"
-        [style]="{'flex': '1'}"
-        >
+      <p-button icon="pi pi-plus" styleClass="p-button-success" [style]="{'flex': '1'}"
+        (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin!)">+
       </p-button>
 
-      <p-button
-        icon="pi pi-minus"
-        styleClass="p-button-danger"
-        [style]="{'flex': '1'}"
-        >
+      <p-button icon="pi pi-minus" styleClass="p-button-danger" [style]="{'flex': '1'}"
+        (click)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin!)">-
       </p-button>
     </div>
   </div>
 </div>
 
 <!-- Total y botones -->
-<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-top:1rem; gap:0.5rem;">
+<div
+  style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-top:1rem; gap:0.5rem;">
 
   <!-- Botones a la izquierda -->
   <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-    <p-button
-      *ngIf="productos.length > 0"
-      label="Vaciar Carrito"
-      styleClass="p-button-danger"
-      >
+    <p-button *ngIf="productos.length > 0" label="Vaciar Carrito" styleClass="p-button-danger"
+      (click)="vaciarCarritoConfirmacion()">
     </p-button>
 
-    <p-button
-      *ngIf="productos.length > 0"
-      label="Pagar"
-      styleClass="p-button-success"
-      >
+    <p-button *ngIf="productos.length > 0" label="Pagar" styleClass="p-button-success"
+      (click)="pagarCarritoConfirmacion()">
     </p-button>
   </div>
 
@@ -111,51 +98,43 @@
 </div>
 
 <!-- Modal Vaciar Carrito -->
-<!--<p-dialog header="Confirmación" [(visible)]="mostrarModalVaciar" [modal]="true" [closable]="false" [style]="{width:'300px'}">-->
-<!--  <p>¿Estás seguro que deseas vaciar el carrito?</p>-->
-<!--  <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">-->
-<!--    <button pButton label="Sí" style="min-width:70px;" (click)="vaciarCarrito(idUsuario)"></button>-->
-<!--    <button pButton label="No" style="min-width:70px;" (click)="mostrarModalVaciar=false"></button>-->
-<!--  </div>-->
-<!--</p-dialog>-->
+<p-dialog header="Confirmación" [(visible)]="mostrarModalVaciar" [modal]="true" [closable]="false"
+  [style]="{width:'300px'}">
+  <p>¿Estás seguro que deseas vaciar el carrito?</p>
+  <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
+    <button pButton label="Sí" style="min-width:70px;" (click)="vaciarCarrito()"></button>
+    <button pButton label="No" style="min-width:70px;" (click)="mostrarModalVaciar=false"></button>
+  </div>
+</p-dialog>
 
-<!--&lt;!&ndash; Modal Pagar Carrito &ndash;&gt;-->
-<!--<p-dialog header="Confirmación" [(visible)]="mostrarModalPagar" [modal]="true" [closable]="false" [style]="{width:'300px'}">-->
-<!--  <ng-container *ngIf="!procesoCompletado; else exito">-->
-<!--    <p>¿Confirmas el pago del carrito?</p>-->
-<!--    <h3>$Total: {{totalCarrito}}</h3>-->
-<!--    <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">-->
-<!--      <button pButton label="Sí" style="min-width:70px;" (click)="pagarCarrito(idUsuario)"></button>-->
-<!--      <button pButton label="No" style="min-width:70px;" (click)="mostrarModalPagar=false"></button>-->
-<!--    </div>-->
-<!--  </ng-container>-->
+<!-- Modal Pagar Carrito -->
+<p-dialog header="Confirmación" [(visible)]="mostrarModalPagar" [modal]="true" [closable]="false"
+  [style]="{width:'300px'}">
+  <!-- Estado inicial: confirmar pago -->
+  <ng-container *ngIf="!mostrarSpinner && !procesoCompletado; else exito">
+    <p>¿Confirmas el pago del carrito?</p>
+    <h3>$Total: {{ totalCarrito }}</h3>
+    <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
+      <button pButton label="Sí" style="min-width:70px;" (click)="pagarCarrito()"></button>
+      <button pButton label="No" style="min-width:70px;" (click)="mostrarModalPagar=false"></button>
+    </div>
+  </ng-container>
 
-<!--  <ng-template #exito>-->
-<!--    <div style="text-align:center;">-->
-<!--      <i class="pi pi-check" style="font-size:2rem; color:green;"></i>-->
-<!--      <p>¡Pago realizado con éxito!</p>-->
-<!--      <button pButton label="Cerrar" style="margin-top:0.5rem;" (click)="mostrarModalPagar=false"></button>-->
-<!--    </div>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->
+  <!-- Spinner y confirmación final -->
+  <ng-template #exito>
+    <div style="text-align:center;">
+      <!-- Spinner -->
+      <div *ngIf="mostrarSpinner">
+        <p-progress-spinner ariaLabel="loading"></p-progress-spinner>
+        <p>Procesando pago...</p>
+      </div>
 
-<!-- Estilos inline para mostrar/ocultar según pantalla -->
-<style>
-  @media (max-width: 870px) {
-    .desktop-only { display: none; }
-    .mobile-only { display: block; }
-  }
-  @media (min-width: 870px) {
-    .desktop-only { display: block; }
-    .mobile-only { display: none; }
-  }
-
-  .responsive-img {
-    width: 100%;
-    max-width: 120px; /* Tamaño máximo deseado */
-    height: auto; /* Mantiene proporción */
-    object-fit: contain; /* Si querés que escale sin recortar */
-    border-radius: 8px;
-  }
-
-</style>
+      <!-- Confirmación -->
+      <div *ngIf="!mostrarSpinner && procesoCompletado">
+        <i class="pi pi-check" style="font-size:2rem; color:green;"></i>
+        <p>¡Pago realizado con éxito!</p>
+        <button pButton label="Cerrar" style="margin-top:0.5rem;" (click)="mostrarModalPagar=false"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

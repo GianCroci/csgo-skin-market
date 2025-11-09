@@ -7,10 +7,11 @@ import { Button } from 'primeng/button';
 import { Usuario } from '../../interfaces/usuario.interface';
 import { Router, RouterLink } from '@angular/router';
 import { FormUsuario } from "../../components/form-usuario/form-usuario";
+import { VideoBackgroundComponent } from "../../../../shared/video-background/video-background";
 
 @Component({
   selector: 'app-create-usuario',
-  imports: [ReactiveFormsModule, InputTextModule, FormUsuario],
+  imports: [ReactiveFormsModule, InputTextModule, FormUsuario, VideoBackgroundComponent],
   templateUrl: './create-usuario.component.html',
   styleUrl: './create-usuario.component.css',
 })

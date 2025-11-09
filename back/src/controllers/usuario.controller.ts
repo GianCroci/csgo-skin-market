@@ -1,4 +1,4 @@
-import {type usuario } from './../../node_modules/.prisma/client/index.js';
+
 
 import { type Request, type Response } from "express";
 import { UsuarioService } from "../services/usuario.service.js";
@@ -46,28 +46,6 @@ export class UsuarioController {
         }
     }
 
-    /*public existeMail = async (req: Request, res: Response) => {
-
-        try {
-            const mail = String(req.params.mail);
-
-            const existeMail = await usuarioService.existeMail(mail);
-
-            if (!existeMail) {
-                
-                 res.status(200).json(existeMail);
-                 return false;
-            }
-            
-            res.status(404).json({ message: 'El mail ya esta registrado' })
-            return true
-           
-
-
-        } catch (error) {
-            res.status(500).json({ message: "No se pudo obtener el usuario", error })
-        }
-    }*/
 
     public crearUsuario = async (req: Request, res: Response) => {
   try {
@@ -80,6 +58,7 @@ export class UsuarioController {
     }
 
     const usuario = await usuarioService.crearUsuario(newUsuario);
+    const carrito = await usuarioService.crearCarritoParaUsuario(usuario.id_usuario);
     res.status(201).json(usuario);
   } catch (error) {
     console.error("Error al crear usuario:", error);
@@ -159,4 +138,68 @@ export class UsuarioController {
         }
     }
 
+    public getProductosDelCarritoDeUnUsuario = async (req: any, res: Response) => {
+        try {
+            console.log(req.user)
+            const id = Number(req.params.id);
+            console.log("ID del usuario autenticado:", id);
+            console.log("🔹 Usuario decodificado del token:", req.user);
+
+            const productos = await usuarioService.getProductosDelCarritoDeUnUsuario(id);
+            console.log("Productos encontrados:", productos);
+
+            if (!productos) {
+                return res.status(404).json({ message: 'Productos no encontrados' });
+            }
+
+            res.status(200).json(productos);
+        } catch (error) {
+            console.error("Error en getProductosDelCarritoDeUnUsuario:", error);
+            res.status(500).json({ message: 'Error al obtener los productos' });
+        }
+    }
+
+    public postAgregarProductoAlCarrito = async(req: any, res: Response) => {
+        try {
+            const id = Number(req.params.id);
+
+            const productoAAgregar = { productoId: req.body.productoId,  usuarioId: id };
+
+            const producto = await usuarioService.postAgregarProductoAlCarrito(productoAAgregar);
+            res.status(201).json(producto);
+
+        } catch (error) {
+            console.error("Error en agregarProductoAlCarrito:", error);
+            res.status(500).json({ message: 'Error al agregar el producto al carrito' });
+        }
+    }
+
+
+    public postBorrarProductoDelCarrito = async(req: any, res: Response) => {
+        try {
+            const id = Number(req.params.id);
+
+            const productoABorrar = { productoId: req.body.productoId, usuarioId: id  };
+
+            const producto = await usuarioService.postBorrarProductoDelCarrito(productoABorrar);
+            res.status(201).json(producto);
+
+        } catch (error) {
+            console.error("Error en borrarProductoDelCarrito:", error);
+            res.status(500).json({ message: 'Error al borrar el producto del carrito' });
+        }
+    }
+
+    public postVaciarCarrito = async(req: any, res: Response) => {
+        try {
+            const id = Number(req.params.id);
+
+            await usuarioService.postVaciarCarrito(id);
+            res.status(201).json({ message: 'Carrito vaciado correctamente' });
+
+        } catch (error) {
+            console.error("Error en vaciarCarrito:", error);
+            res.status(500).json({ message: 'Error al vaciar el carrito' });
+        }
+    }
 }

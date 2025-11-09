@@ -1,0 +1,15 @@
+.carousel{
+  display: block;
+  background-color: #2a2a2e;
+  border-radius: 12px;
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  position: relative;
+  height: 300px;
+  width: 45%;
+}
+
+img{
+    width: 185px;
+}

@@ -1,4 +1,6 @@
-<form [formGroup]="form" method="post" (ngSubmit)="sendUsuario()" class="flex flex-col gap-4 w-full sm:w-56">
+<div class="registro-container">
+<h1>Registrarse</h1>
+<form [formGroup]="form" method="post" (ngSubmit)="sendUsuario()" class="flex flex-col gap-4 w-full sm:w-56 mx-auto">
     <div class="flex flex-col gap-1">
         <input pInputText type="text" id="nombre" placeholder="Nombre" formControlName="nombre" [invalid]="isInvalid('nombre')" />
         @if (isInvalid('nombre')) {
@@ -26,10 +28,65 @@
         }
     </div>
     <div class="flex flex-col gap-1">
-        <input pInputText type="password" id="password" placeholder="Contraseña" formControlName="password" [invalid]="isInvalid('password')" />
-        @if (isInvalid('password')) {
-            <p-message severity="error" size="small" variant="simple">La contraseña debe tener al menos 6 caracteres</p-message>
+        <input pInputText type="text" id="direccion" placeholder="Direccion" formControlName="direccion" [invalid]="isInvalid('direccion')" />
+        @if (isInvalid('direccion')) {
+            <p-message severity="error" size="small" variant="simple">Direccion es requerido.</p-message>
         }
     </div>
-    <button pButton severity="secondary" type="submit"><span pButtonLabel>Registrarme</span></button>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="text" id="localidad" placeholder="Localidad" formControlName="localidad" [invalid]="isInvalid('localidad')" />
+        @if (isInvalid('localidad')) {
+            <p-message severity="error" size="small" variant="simple">Localidad es requerido.</p-message>
+        }
+    </div>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="text" id="provincia" placeholder="Provincia" formControlName="provincia" [invalid]="isInvalid('provincia')" />
+        @if (isInvalid('provincia')) {
+            <p-message severity="error" size="small" variant="simple">Provincia es requerido.</p-message>
+        }
+    </div>
+    <div class="flex flex-col gap-1">
+        <input pInputText type="text" id="pais" placeholder="Pais" formControlName="pais" [invalid]="isInvalid('pais')" />
+        @if (isInvalid('pais')) {
+            <p-message severity="error" size="small" variant="simple">Pais es requerido.</p-message>
+        }
+    </div>
+ <div class="flex flex-col gap-1 password">
+  <p-password 
+      id="password"
+      placeholder="Contraseña"
+      formControlName="password"
+      [feedback]="true"
+      [toggleMask]="true"
+      [invalid]="isInvalid('password')"
+      autocomplete="off">
+      
+      <ng-template #header>
+          <div class="font-semibold text-sm mb-2">Requisitos de contraseña</div>
+      </ng-template>
+
+      <ng-template #footer>
+          <p-divider />
+          <ul class="pl-2 my-0 leading-normal text-xs">
+              <li>Al menos una minúscula</li>
+              <li>Al menos una mayúscula</li>
+              <li>Al menos un número</li>
+              <li>Mínimo 8 caracteres</li>
+          </ul>
+      </ng-template>
+      @if (form.get('password')?.hasError('required') && form.get('password')?.touched) {
+  <p-message severity="error" size="small" variant="simple">La contraseña es requerida</p-message>
+    }
+    @if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+    <p-message severity="error" size="small" variant="simple">Mínimo 8 caracteres</p-message>
+    }
+    @if (form.get('password')?.hasError('pattern') && form.get('password')?.touched) {
+    <p-message severity="error" size="small" variant="simple">
+        Debe contener al menos una mayúscula, una minúscula y un número
+    </p-message>
+    }
+  </p-password>
+</div>
+    <p-button pButton severity="secondary" type="submit" [disabled]="form.invalid"><span pButtonLabel>Registrarme</span></p-button>
 </form>
+</div>

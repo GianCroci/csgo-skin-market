@@ -1,4 +1,3 @@
-// src/app/services/auth.service.ts
 import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
@@ -15,6 +14,8 @@ interface LoginResponse {
     apellido: string;
     mail: string;
     rol: string;
+    provincia: string;
+    pais: string
   };
 }
 
@@ -24,28 +25,33 @@ interface User {
   apellido: string;
   mail: string;
   rol: string;
+  provincia: string;
+  pais: string
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // Ajusta tu URL
+  private apiUrl = 'http://localhost:3000/api';
   private readonly TOKEN_KEY = 'auth_token';
-  
+
   // Signals para estado reactivo
   private userSignal = signal<User | null>(null);
   private isAuthSignal = signal<boolean>(false);
-  
+
   // Exponer como readonly
   user = this.userSignal.asReadonly();
   isAuthenticated = this.isAuthSignal.asReadonly();
-  
+
   // Computed para el nombre completo
   fullName = computed(() => {
     const user = this.userSignal();
     return user ? `${user.nombre} ${user.apellido}` : '';
   });
+
+
+
 
   constructor(
     private http: HttpClient,
@@ -54,16 +60,22 @@ export class AuthService {
     this.checkAuthStatus();
   }
 
-  // Login
+  public recargarUsuario(): void {
+  this.checkAuthStatus();
+}
+
+
   login(mail: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.api_url}/usuario/login`, {mail, password})
       .pipe(
         tap(response => {
           if (response.success && response.token) {
-            // Guardar token
+
             localStorage.setItem(this.TOKEN_KEY, response.token);
-            
+
             // Actualizar estado
+
+
             this.userSignal.set(response.user);
             this.isAuthSignal.set(true);
           }
@@ -75,7 +87,7 @@ export class AuthService {
       );
   }
 
-  // Logout
+
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     this.userSignal.set(null);
@@ -83,32 +95,37 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  // Obtener token
+
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  // Verificar si hay sesión activa al iniciar la app
+
   private checkAuthStatus(): void {
     const token = this.getToken();
-    
+
     if (token) {
-      // Decodificar el token para obtener datos del usuario
+
       try {
         const payload = this.decodeToken(token);
-        
+
         // Verificar si el token no ha expirado
+
+
         if (payload.exp * 1000 > Date.now()) {
           this.userSignal.set({
-            id: payload.id,
+            id: payload.id_usuario,
             nombre: payload.nombre,
             apellido: payload.apellido,
             mail: payload.mail,
-            rol: payload.rol
+            rol: payload.rol,
+            provincia: payload.provincia,
+            pais: payload.pais
+
           });
           this.isAuthSignal.set(true);
         } else {
-          // Token expirado
+
           this.logout();
         }
       } catch (error) {
@@ -118,7 +135,6 @@ export class AuthService {
     }
   }
 
-  // Decodificar JWT (solo la parte del payload)
   private decodeToken(token: string): any {
     try {
       const payload = token.split('.')[1];
@@ -128,7 +144,6 @@ export class AuthService {
     }
   }
 
-  // Verificar si el usuario tiene un rol específico
   hasRole(role: string): boolean {
     const user = this.userSignal();
     return user?.rol === role;

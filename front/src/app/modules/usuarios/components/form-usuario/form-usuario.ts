@@ -7,13 +7,16 @@ import { Select } from 'primeng/select';
 import { UsuariosService } from '../../../../api/services/usuarios/usuarios.service';
 import { Usuario } from "../../interfaces/usuario.interface"
 import { Message } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
 
 
 @Component({
   selector: 'app-form-usuario',
-  imports: [ReactiveFormsModule, InputTextModule, Message],
+  imports: [ReactiveFormsModule, InputTextModule, Message, PasswordModule,
+    DividerModule, Button],
   templateUrl: './form-usuario.html',
-  styleUrl: './form-usuario.css',
+  styleUrls: ['./form-usuario.css']
 })
 export class FormUsuario {
 
@@ -37,9 +40,19 @@ export class FormUsuario {
     
       this.form = this.fb.group({
       nombre: [this.usuario()?.nombre, [Validators.required]],
-      apellido: [this.usuario()?.nombre, [Validators.required]],
+      apellido: [this.usuario()?.apellido, [Validators.required]],
       mail: [this.usuario()?.mail, [Validators.required, Validators.email]], 
-      password: [this.usuario()?.nombre, [Validators.required, Validators.minLength(6)]]
+      password: [this.usuario()?.password || '', 
+                  [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
+                  ]
+                ],
+      direccion: [this.usuario()?.direccion, [Validators.required]],
+      localidad: [this.usuario()?.localidad, [Validators.required]],
+      provincia: [this.usuario()?.provincia, [Validators.required]],
+      pais: [this.usuario()?.pais, [Validators.required]],
     });
 
   }
@@ -52,11 +65,20 @@ export class FormUsuario {
 
   sendUsuario() {
 
+    if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
+  }
+
       const usuario: Usuario = {
       nombre: this.form.get('nombre')?.value,
       apellido: this.form.get('apellido')?.value,
       mail: this.form.get('mail')?.value,
       password: this.form.get('password')?.value,
+      direccion: this.form.get('direccion')?.value,
+      localidad: this.form.get('localidad')?.value,
+      provincia: this.form.get('provincia')?.value,
+      pais: this.form.get('pais')?.value
     };
 
     this.eventEmitterFormUsuario.emit(usuario);

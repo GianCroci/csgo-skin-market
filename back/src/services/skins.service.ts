@@ -1,6 +1,7 @@
+import { tipo_rareza } from "@prisma/client";
 import type { Decimal } from "@prisma/client/runtime/library";
 import type { SkinsRepository } from "../repository/skins.repository.js";
-import { tipo_rareza } from "@prisma/client"; 
+
 
 
 export class SkinsService {

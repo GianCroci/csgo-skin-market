@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class SkinsService {
 
   http = inject(HttpClient);
-  
+
   constructor() { }
 
 
@@ -19,6 +19,10 @@ export class SkinsService {
     return this.http.get<Producto[]>(`${environment.api_url}/skin`);
   }
 
-  
-  
+  getSkinById(id: number): Observable<Producto> {
+
+    return this.http.get<Producto>(`${environment.api_url}/skin/${id}`);
+  }
+
+
 }

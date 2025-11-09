@@ -1,0 +1,25 @@
+@media (max-width: 870px) {
+    .desktop-only { display: none; }
+    .mobile-only { display: block; }
+  }
+  @media (min-width: 870px) {
+    .desktop-only { display: block; }
+    .mobile-only { display: none; }
+  }
+
+  .responsive-img {
+    width: 100%;
+    max-width: 120px; /* Tamaño máximo deseado */
+    height: auto; /* Mantiene proporción */
+    object-fit: contain; /* Si querés que escale sin recortar */
+    border-radius: 8px;
+  }
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+a:hover{
+  text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.1);
+}
