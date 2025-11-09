@@ -2,20 +2,83 @@
   
   <h1 class="catalogo-title">Catálogo Completo de Skins</h1>
 
-  <div class="product-grid">
+  <!-- FILTROS -->
+  <div class="filters-container">
+    <div class="filter-group">
+      <label for="nombre">Buscar por nombre:</label>
+      <input 
+        pInputText 
+        id="nombre"
+        [(ngModel)]="filters.nombre" 
+        (ngModelChange)="onFilterChange()"
+        placeholder="Nombre de skin..."
+      />
+    </div>
 
+    <div class="filter-group">
+  <label for="rareza">Rareza:</label>
+  <select 
+    id="rareza"
+    [(ngModel)]="filters.rareza"
+    (ngModelChange)="onFilterChange()"
+    class="form-select"
+  >
+    <option value="">Todas</option>
+    <option *ngFor="let rareza of rarezas" [value]="rareza.value">
+      {{ rareza.label }}
+    </option>
+  </select>
+</div>
+
+    <div class="filter-group">
+      <label for="precioMin">Precio mínimo:</label>
+      <input 
+        pInputText 
+        id="precioMin"
+        type="number"
+        [(ngModel)]="filters.precioMin" 
+        (ngModelChange)="onFilterChange()"
+        placeholder="0"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="precioMax">Precio máximo:</label>
+      <input 
+        pInputText 
+        id="precioMax"
+        type="number"
+        [(ngModel)]="filters.precioMax" 
+        (ngModelChange)="onFilterChange()"
+        placeholder="9999"
+      />
+    </div>
+
+    <div class="filter-group">
+      <button 
+        pButton 
+        type="button" 
+        label="Limpiar filtros"
+        icon="pi pi-filter-slash"
+        (click)="clearFilters()"
+        class="p-button-secondary"
+      ></button>
+    </div>
+  </div>
+
+  <!-- GRID DE PRODUCTOS -->
+  <div class="product-grid">
     @for (producto of skinsEnPaginaActual; track producto.id_skin) {
-      
       <app-product-card
         [producto]="producto"
         (productoAgregado)="onAgregarProducto($event)">
       </app-product-card>
-
     } @empty {
-      <p>Cargando skins o no se encontraron productos...</p>
+      <p>No se encontraron productos con esos filtros...</p>
     }
   </div>
 
+  <!-- PAGINADOR -->
   <p-paginator
     (onPageChange)="onPageChange($event)"
     [rows]="rows"
