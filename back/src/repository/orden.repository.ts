@@ -20,12 +20,19 @@ export class OrdenRepository {
 
         // Buscar las skins según los IDs almacenados
         const skins = await prisma.skins.findMany({
-        where: { id_skin: { in: orden.skins_ids } },
-        include: { armas: true },
+            where: { id_skin: { in: orden.skins_ids } },
+            select: {
+                id_skin: true,
+                nombre_skin: true,
+                precio: true,
+                url_imagen: true
+            }
         });
 
-        // Devolver la orden con las skins asociadas
-        return { ...orden, skins };
+        // Devolver la orden con las skins asociadas (sin skins_ids)
+        const { skins_ids, ...ordenSinIds } = orden;
+
+        return { ...ordenSinIds, skins };
     } 
 
 }

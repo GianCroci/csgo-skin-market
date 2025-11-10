@@ -25,15 +25,14 @@ export class OrdenController {
         try {
             const id = Number(req.params.id);
             const orden = await ordenService.obtenerOrden(id);
-
             if (!orden) return res.status(404).json({ error: "Orden no encontrada" });
-
             res.json(orden);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Error al obtener el detalle de la orden" });
         }
     }
+
 
 
 }
