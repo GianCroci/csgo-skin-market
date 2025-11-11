@@ -1,6 +1,7 @@
 import { Router } from "express";
 import usuarioRouter from "./usuario-router/usuario.routes.js";
 import skinRouter from "./skins-router/skins.routes.js";
+import ordenRouter from "./orden-router/orden.router.js";
 
 
 export class AppRoutes {
@@ -11,6 +12,7 @@ export class AppRoutes {
 
         router.use('/api/usuario',usuarioRouter)
         router.use('/api/skin',skinRouter)
+        router.use('/api/orden',ordenRouter)
 
         return router;
     }

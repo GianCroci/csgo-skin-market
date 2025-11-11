@@ -1,10 +1,10 @@
-import { Producto } from './producto.interface';
+import { Producto } from "./producto.interface";
 
 export interface Orden {
-  id?: number;
-  fecha: Date;
+  id_orden: number;
+  id_usuario: number;
+  fecha: string;
   estado: string;
-  pago: string;
   total: number;
-  productos: Producto[];
+  skins: Producto[];
 }
