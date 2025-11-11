@@ -35,4 +35,17 @@ export class OrdenRepository {
         return { ...ordenSinIds, skins };
     } 
 
+    async createOrder(usuarioId:number, idsSkins:number[],totalCarrito:number){
+        const nuevaOrden = await prisma.ordenes.create({
+            data: {
+                id_usuario: usuarioId,
+                fecha: new Date(),
+                estado: 'Abierta',
+                total: totalCarrito,
+                skins_ids: idsSkins
+            }
+        });
+        return nuevaOrden;
+    }
+
 }

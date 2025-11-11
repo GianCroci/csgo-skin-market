@@ -9,6 +9,7 @@ import {Carrito_Producto} from '../../interfaces/carrito_producto.interface';
 import {UsuariosService} from '../../../../api/services/usuarios/usuarios.service';
 import { AuthService } from '../../../../api/services/auth.service';
 import { ProgressSpinner } from 'primeng/progressspinner';
+import { OrdenService } from '../../../../api/services/ordenes/orden.service';
 
 @Component({
   selector: 'app-table-productos-carrito-usuario',
@@ -30,6 +31,7 @@ export class TableProductosCarritoUsuario {
   mostrarModalPagar = false;
   procesando = false;
   usuarioService = inject(UsuariosService);
+  ordenService = inject(OrdenService);
   activatedRouter = inject(ActivatedRoute)
   authService = inject(AuthService);
   productos: Carrito_Producto[] = [];
@@ -140,13 +142,23 @@ export class TableProductosCarritoUsuario {
     this.mostrarSpinner = true;
     this.procesoCompletado = false;
     console.log(this.mostrarSpinner)
+
+    const idsSkins = this.productos.map(producto => producto.skin.id_skin).filter(idSkin => idSkin != null);
+    console.log('IDs de skins para la orden:', idsSkins);
+    this.ordenService.generarOrden(this.idUsuario, idsSkins,this.totalCarrito).subscribe({
+      next: () => {
+        console.log('Orden generada correctamente');
+      },
+      error: () => {
+        this.procesando = false;
+      },
+      complete: () => {
+      }
+    });
+
+
     this.usuarioService.vaciarCarrito(this.idUsuario).subscribe({
       next: () => {
-        setTimeout(() => {  // opcional, para que se vea el spinner 1s
-        this.mostrarSpinner = false;
-        this.procesoCompletado = true;
-        this.listProductosCarritoUsuario();
-      }, 2500);
         // Opcional: actualiza la vista
       },
       error: () => {
@@ -154,6 +166,11 @@ export class TableProductosCarritoUsuario {
         // Maneja el error
       },
       complete: () => {
+         setTimeout(() => {  // opcional, para que se vea el spinner 1s
+        this.mostrarSpinner = false;
+        this.procesoCompletado = true;
+        this.listProductosCarritoUsuario();
+      }, 2500);
       }
     });
   }

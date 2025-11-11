@@ -34,5 +34,15 @@ export class OrdenController {
     }
 
 
-
+    public async generarOrden(req: Request, res: Response) {
+        try {
+            const usuarioId = Number(req.params.id);
+            const idsSkins: number[] = req.body.idsSkins;
+            const totalCarrito: number = req.body.totalCarrito;
+            const orden = await ordenService.generarOrden(usuarioId, idsSkins,totalCarrito);
+            res.status(201).json(orden);
+        } catch (error) {
+            res.status(500).json({ error: "Error al generar la orden" });
+        }
+    }
 }
