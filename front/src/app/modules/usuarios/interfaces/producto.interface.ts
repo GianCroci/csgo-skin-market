@@ -1,13 +1,3 @@
-/*export interface Producto {
-  id?: number;
-  nombre: string;
-  descripcion: string;
-  clasificacion: string;
-  precio: number;
-  imagenUrl: string;
-  stock: number;
-}*/
-
 export interface Producto {
   id_skin:      number;
   nombre_skin:  string;

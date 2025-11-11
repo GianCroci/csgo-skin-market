@@ -1,8 +1,12 @@
-<p-table [value]="orden.productos" [tableStyle]="{ 'min-width': '60rem' }">
+<p-table [value]="orden?.skins" [tableStyle]="{ 'min-width': '60rem' }">
     <ng-template pTemplate="caption">
         <div class="flex items-center justify-between">
-            <h1 class="text-xl font-bold">Orden #{{ orden.id }}</h1>
-            <p-button icon="pi pi-refresh" rounded raised></p-button>
+            <h1 class="text-xl font-bold">Orden #{{ orden?.id_orden }}</h1>
+        </div>
+        <div class="flex gap-8 mt-2">
+            <p>Fecha: {{ orden?.fecha | date:'dd/MM/yyyy' }}</p>
+            <p>Total: ARS ${{ orden?.total | number:'1.2-2' }}</p>
+            <p>Estado: {{ orden?.estado }}</p>
         </div>
     </ng-template>
 
@@ -11,31 +15,27 @@
             <th>Nombre</th>
             <th>Imagen</th>
             <th>Precio</th>
-            <th>Clasificación</th>
-            <th>Cantidad</th>
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-producto>
+    <ng-template pTemplate="body" let-skin>
         <tr>
-            <td>{{ producto.nombre }}</td>
+            <td>{{ skin.nombre_skin }}</td>
             <td>
                 <img
-                    [src]="producto.imagenUrl"
-                    [alt]="producto.nombre"
+                    [src]="skin.url_imagen"
+                    [alt]="skin.nombre_skin"
                     class="w-24 rounded responsive-img"
                 />
             </td>
-            <td>{{ producto.precio | currency : 'ARS' }}</td>
-            <td>{{ producto.clasificacion }}</td>
-            <td>{{ producto.cantidad }}</td>
+            <td>ARS ${{ skin.precio | number:'1.2-2' }}</td>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="footer">
         <tr>
             <td colspan="5">
-                En total hay {{ orden.productos.length }} productos.
+                En total hay {{ orden?.skins?.length || 0 }} skins.
             </td>
         </tr>
     </ng-template>
