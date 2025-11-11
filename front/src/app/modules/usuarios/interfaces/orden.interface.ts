@@ -1,6 +1,5 @@
 export interface Orden {
   id_orden: number;
-  id?: number;
   id_usuario: number;
   fecha: string;
   estado: string;

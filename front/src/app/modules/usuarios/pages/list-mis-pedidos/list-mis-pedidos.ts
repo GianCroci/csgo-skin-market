@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrdenService } from '../../../../api/services/ordenes/orden.service';
 import { Orden } from '../../interfaces/orden.interface';
+import { AuthService } from '../../../../api/services/auth.service';
 
 @Component({
   selector: 'app-list-mis-pedidos',
@@ -21,16 +22,24 @@ export class ListPedidosComponent implements OnInit{
   userId = 1; // Aquí deberías obtener el ID del usuario autenticado
 
   constructor(
-    private ordenService : OrdenService
+    private ordenService : OrdenService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.cargarOrdenes();
+    const user = this.authService.user();
+    const userId = user?.id;
+
+    if (userId) {
+      this.cargarOrdenes(userId);
+    } else {
+      console.error('No se encontró un usuario logueado.');
+    }
   }
 
-  cargarOrdenes() {
-    this.ordenService.getOrdenesPorUsuario(this.userId).subscribe({
-      next: (data:Array<Orden>) => {
+  cargarOrdenes(userId:number) {
+    this.ordenService.getOrdenesPorUsuario(userId).subscribe({
+      next: (data: Orden[]) => {
         this.ordenes = data;
         console.log('Órdenes obtenidas:', this.ordenes);
       },
