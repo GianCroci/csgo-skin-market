@@ -1,9 +1,9 @@
-import { Producto } from './producto.interface';
-
 export interface Orden {
-  id_orden?: number;
-  fecha: Date;
+  id_orden: number;
+  id?: number;
+  id_usuario: number;
+  fecha: string;
   estado: string;
   total: number;
-  productos: Producto[];
+  skins_ids: number[];
 }

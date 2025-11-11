@@ -3,7 +3,7 @@ import {Routes} from '@angular/router';
 import {CreateUsuarioComponent} from './pages/create-usuario/create-usuario.component';
 import {UpdateUsuarioComponent} from './pages/update-usuario/update-usuario.component';
 import {ListPedidosComponent} from './pages/list-mis-pedidos/list-mis-pedidos';
-import {ListDetallePedido} from './pages/list-detalle-pedido/list-detalle-pedido';
+import {ListDetallePedidoComponent} from './pages/list-detalle-pedido/list-detalle-pedido';
 import {VerificarMail} from './pages/verificar-mail/verificar-mail';
 import {Login} from './pages/login/login';
 import {authGuard} from '../../api/guards/auth.guard';
@@ -38,7 +38,7 @@ export const usuariosRoutes: Routes = [
       },
       {
         path: 'orden/:id',
-        component: ListDetallePedido,
+        component: ListDetallePedidoComponent,
         canActivate: [authGuard]
       },
       {
