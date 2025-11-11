@@ -9,7 +9,7 @@
               Orden #{{ item.id_orden }}
           </ng-template>
           <div>
-            Fecha: {{ item.fecha }}
+            Fecha: {{ item.fecha | date: 'dd/MM/yyyy' }}
           </div>
           <div>
             Estado: {{ item.estado }}
