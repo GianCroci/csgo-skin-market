@@ -93,6 +93,7 @@ export class AuthService {
     this.userSignal.set(null);
     this.isAuthSignal.set(false);
     this.router.navigate(['/login']);
+    sessionStorage.removeItem('skinFilters')
   }
 
 

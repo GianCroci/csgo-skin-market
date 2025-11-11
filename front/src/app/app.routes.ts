@@ -6,6 +6,7 @@ import { list } from '@primeuix/themes/aura/autocomplete';
 import { pendingUntilEvent } from '@angular/core/rxjs-interop';
 import { loginGuard } from './api/guards/login.guard';
 import { authGuard } from './api/guards/auth.guard';
+import { Catalogo } from './public/home/catalogo/catalogo';
 
 
 export const routes: Routes = [
@@ -23,6 +24,14 @@ export const routes: Routes = [
     {
         path: 'home',
         component: Home,
+    },
+    {
+        path: 'catalogo',
+        component: Catalogo
+    },
+    {
+      path: 'skins/:id',
+      loadComponent: () => import('./modules/productos/pages/product-detail/product-detail').then(m => m.ProductDetail)
     },
     {
         path: 'usuarios',

@@ -11,6 +11,7 @@ import { Producto } from '../../modules/usuarios/interfaces/producto.interface';
 import { SkinsService } from '../../api/services/skins/skins.service';
 import { Subscription } from 'rxjs';
 import { Usuario } from '../../../../../back/src/models/usuario.model';
+import { Router } from '@angular/router';
 
 
 
@@ -26,6 +27,7 @@ export class Home implements OnInit, OnDestroy{
   public skins: Producto[]= [];
   private skinService= inject(SkinsService);
   private skinSubscription?: Subscription;
+  private router = inject(Router);
 
   usuarioService = inject(UsuariosService);
   authService = inject(AuthService);
@@ -136,18 +138,16 @@ export class Home implements OnInit, OnDestroy{
       skin.id_arma_base == 5
     );
 
+    this.productosDestacados = [...this.skins]
+      .sort((a, b) => Number(b.precio) - Number(a.precio))
+      .slice(0, 6);
 
-    /*
-    this.productosDestacados= this.skins.(
-      sort((a, b) => b.precio - a.precio) // Ordenamos de mayor a menor precio
-      .slice(0, 10); // Tomamos los primeros 10');
-  */
     this.productosSMG= this.skins.filter(skin=>
     skin.armas && skin.armas.categoria ==='SMG');
-  }
+    }
 
   verTodosLosProductos(){
-
+    this.router.navigate(['/catalogo']);
   }
 
 
