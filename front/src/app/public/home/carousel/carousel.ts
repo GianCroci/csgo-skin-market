@@ -52,7 +52,11 @@ export class Carousel {
   }
 
   onProductoAgregado(producto: Producto) {
-    console.log('Evento capturado en el CARRUSEL:', producto.nombre_skin);
+    //console.log('Evento capturado en el CARRUSEL:', producto.nombre_skin);
+    if(!this.idUsuario){
+      this.messageService.add({ severity: 'warn', summary: 'Atención', detail: 'Debes iniciar sesión para agregar productos.',key:'br' });
+      return;
+    }
     this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, {productoId:producto.id_skin}).subscribe({
         next: () => {
           // Actualiza la vista, por ejemplo, vuelve a cargar el carrito

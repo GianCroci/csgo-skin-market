@@ -1,15 +1,15 @@
 <div class="catalogo-container">
-  
+
   <h1 class="catalogo-title">Catálogo Completo de Skins</h1>
 
   <!-- FILTROS -->
   <div class="filters-container">
     <div class="filter-group">
       <label for="nombre">Buscar por nombre:</label>
-      <input 
-        pInputText 
+      <input
+        pInputText
         id="nombre"
-        [(ngModel)]="filters.nombre" 
+        [(ngModel)]="filters.nombre"
         (ngModelChange)="onFilterChange()"
         placeholder="Nombre de skin..."
       />
@@ -17,7 +17,7 @@
 
     <div class="filter-group">
   <label for="rareza">Rareza:</label>
-  <select 
+  <select
     id="rareza"
     [(ngModel)]="filters.rareza"
     (ngModelChange)="onFilterChange()"
@@ -32,11 +32,11 @@
 
     <div class="filter-group">
       <label for="precioMin">Precio mínimo:</label>
-      <input 
-        pInputText 
+      <input
+        pInputText
         id="precioMin"
         type="number"
-        [(ngModel)]="filters.precioMin" 
+        [(ngModel)]="filters.precioMin"
         (ngModelChange)="onFilterChange()"
         placeholder="0"
       />
@@ -44,20 +44,20 @@
 
     <div class="filter-group">
       <label for="precioMax">Precio máximo:</label>
-      <input 
-        pInputText 
+      <input
+        pInputText
         id="precioMax"
         type="number"
-        [(ngModel)]="filters.precioMax" 
+        [(ngModel)]="filters.precioMax"
         (ngModelChange)="onFilterChange()"
         placeholder="9999"
       />
     </div>
 
     <div class="filter-group">
-      <button 
-        pButton 
-        type="button" 
+      <button
+        pButton
+        type="button"
         label="Limpiar filtros"
         icon="pi pi-filter-slash"
         (click)="clearFilters()"
@@ -77,7 +77,7 @@
       <p>No se encontraron productos con esos filtros...</p>
     }
   </div>
-
+<p-toast position="bottom-right" key="br"/>
   <!-- PAGINADOR -->
   <p-paginator
     (onPageChange)="onPageChange($event)"

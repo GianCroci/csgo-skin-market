@@ -68,7 +68,7 @@ export class ProductDetail implements OnInit {
       });
 
     } else {
-        console.warn("Usuario no logueado, no se puede agregar al carrito");
+        //console.warn("Usuario no logueado, no se puede agregar al carrito");
         this.messageService.add({ severity: 'warn', summary: 'Atención', detail: 'Debes iniciar sesión para agregar productos.' });
     }
   }

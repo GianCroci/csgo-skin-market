@@ -13,6 +13,7 @@
     height: auto; /* Mantiene proporción */
     object-fit: contain; /* Si querés que escale sin recortar */
     border-radius: 8px;
+    cursor: pointer;
   }
 
 a{

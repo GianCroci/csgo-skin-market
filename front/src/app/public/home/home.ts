@@ -68,12 +68,15 @@ export class Home implements OnInit, OnDestroy{
   }
 
   onAgregarProducto(producto: Producto) {
-    // Agregar producto a carrito
     this.idUsuario = this.authService.user()?.id!;
-    console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre_skin);
+    //console.log('¡¡EVENTO FINAL RECIBIDO EN HOME!! Agregando:', producto.nombre_skin);
+    if(!this.idUsuario){
+      this.messageService.add({ severity: 'warn', summary: 'Atención', detail: 'Inicia sesión para agregar productos.',key:'br' });
+      console.log('Inicia sesion para agregar productos.');
+      return;
+    }
     this.usuarioService.postAgregarProductoAlCarrito(this.idUsuario, { productoId: producto.id_skin }).subscribe({
         next: () => {
-          // Actualiza la vista, por ejemplo, vuelve a cargar el carrito
           console.log('Producto agregado correctamente');
         },
         error: () => {
@@ -81,11 +84,10 @@ export class Home implements OnInit, OnDestroy{
         },
         complete: () => {
           this.showBottomRight()
-          // Opcional: lógica al terminar la petición
+
         }
       }
     )
-
   }
 
   cargarTodasLasSkins():void

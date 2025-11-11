@@ -20,7 +20,7 @@ export class ProductCard  {
 
   agregarAlCarrito() {
     if(this.producto){
-          console.log('Agregando desde la CARD:', this.producto);
+          //console.log('Agregando desde la CARD:', this.producto);
           this.productoAgregado.emit(this.producto);
     };
     // Emitimos el evento hacia el padre, pasándole el producto
