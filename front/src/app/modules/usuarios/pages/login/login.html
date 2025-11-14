@@ -1,8 +1,9 @@
 <app-video-background>
     <div class="login-container">
         <h1>Iniciar sesión</h1>
-        <form [formGroup]="form" (ngSubmit)="login()" class="flex flex-col gap-4 w-full sm:w-56 mx-auto">
-            
+
+        <form [formGroup]="form" (ngSubmit)="login()" style="text-align: center;" class="flex flex-col gap-4 w-full sm:w-56 mx-auto">
+
             <div class="flex flex-col gap-1">
                 <input pInputText type="email" id="mail" placeholder="Mail" formControlName="mail" [invalid]="isInvalid('mail')" />
                 @if (isInvalid('mail')) {
@@ -25,9 +26,22 @@
                     }
                 }
             </div>
+
+            <div class="p-message-center">
+              @if (errorLogin) {
+                <p-message
+                    severity="error"
+                    variant="simple"
+                    size="small">
+                    {{ errorLogin }}
+                </p-message>
+              }
+            </div>
+
             <p-button pButton severity="secondary" type="submit" [disabled]="form.invalid">
                 <span pButtonLabel>Ingresar</span>
             </p-button>
+
         </form>
     </div>
 </app-video-background>
