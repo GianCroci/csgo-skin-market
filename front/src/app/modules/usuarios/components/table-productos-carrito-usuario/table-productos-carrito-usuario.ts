@@ -38,8 +38,8 @@ export class TableProductosCarritoUsuario {
   @Output() mostrarModalVaciarChange = new EventEmitter<boolean>();
   @Output() mostrarModalPagarChange = new EventEmitter<boolean>();
 
-  mostrarModalVaciar = false;
-  mostrarModalPagar = false;
+  @Input() mostrarModalVaciar = false;
+  @Input() mostrarModalPagar = false;
 
   onEliminarProducto(id: number) {
     this.eliminarProducto.emit(id);
