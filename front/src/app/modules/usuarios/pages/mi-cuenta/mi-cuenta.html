@@ -48,7 +48,9 @@
               [responsiveOptions]="responsiveOptions"
               [autoplayInterval]="5000">
               <ng-template pTemplate="item" let-skin>
-                  <div class="skin-card">
+                  <div 
+                  class="skin-card"
+                  [routerLink]="['/skins', skin.id]">
                       <div class="skin-image-wrapper">
                           <img [src]="skin.img" [alt]="skin.name" />
                       </div>

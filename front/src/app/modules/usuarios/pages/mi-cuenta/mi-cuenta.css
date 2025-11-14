@@ -125,6 +125,7 @@
 .skin-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(74, 222, 128, 0.2);
+    cursor: pointer;
 }
 
 .skin-image-wrapper img {

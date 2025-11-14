@@ -50,4 +50,8 @@ export class ListDetallePedidoComponent implements OnInit{
     });
   }
 
+  goBack() {
+    window.history.back();
+  }
+
   }
