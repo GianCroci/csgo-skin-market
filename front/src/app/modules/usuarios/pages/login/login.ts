@@ -30,26 +30,31 @@ export class Login {
 
   usuario = input<Usuario>();
 
-  
+  errorLogin: string | null = null;
 
- 
+
 
   ngOnInit(): void {
-    
+
       this.form = this.fb.group({
-      mail: [this.usuario()?.mail, [Validators.required, Validators.email]], 
+      mail: [this.usuario()?.mail, [Validators.required, Validators.email]],
       password: [this.usuario()?.nombre, [Validators.required, Validators.minLength(6)]]
     });
+
+    this.form.valueChanges.subscribe(() => (this.errorLogin = null));
 
   }
     isInvalid(fieldName: string): boolean {
     const field = this.form.get(fieldName);
     return !!(field?.invalid && field?.touched);
-  }  
+  }
 
   ngOnDestroy(): void {}
 
   login(): void {
+
+    this.errorLogin = null;
+
     if (this.form.invalid) {
     this.form.markAllAsTouched();
     return;
@@ -57,12 +62,22 @@ export class Login {
     const {mail, password} = this.form.value;
     this.authService.login(mail, password).subscribe({
     next: () => {
-      
+
       this.router.navigate(['/home']);
     },
     error: (error) => {
-      
+
       console.log(error);
+      if (error.status === 401) {
+        this.errorLogin = "Contraseña incorrecta";
+      }
+      else if (error.status === 500) {
+        this.errorLogin = "El correo no se encuentra registrado";
+      }
+      else {
+        this.errorLogin = "Ocurrió un error inesperado. Intente más tarde.";
+      }
+
     }
   });
 }
