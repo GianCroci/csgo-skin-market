@@ -11,7 +11,6 @@ model carrito {
   id               Int                @id @default(autoincrement())
   usuario_id       Int                @unique
   fecha_creacion   DateTime?          @default(now()) @db.Timestamp(6)
-  usuario          usuario            @relation(fields: [usuario_id], references: [id_usuario], onDelete: Cascade)
   carrito_producto carrito_producto[]
 
   @@map("carrito")
@@ -23,7 +22,6 @@ model carrito_producto {
   skin_id    Int
   cantidad   Int?    @default(1)
   carrito    carrito @relation(fields: [carrito_id], references: [id], onDelete: Cascade)
-  skin       skins   @relation(fields: [skin_id], references: [id_skin])
 
   @@map("carrito_producto")
 }
@@ -42,9 +40,9 @@ model skins {
   rareza       tipo_rareza
   precio       Decimal     @default(0.00) @db.Decimal(10, 2)
   url_imagen   String      @db.VarChar(255)
-  descripcion  String? @db.VarChar(1000)
+  descripcion  String?     @db.VarChar(1000)
   armas        armas       @relation(fields: [id_arma_base], references: [id_arma], onDelete: Cascade, onUpdate: NoAction, map: "fk_arma")
-  carrito_producto carrito_producto[]
+
   @@unique([id_arma_base, nombre_skin])
 }
 
@@ -67,19 +65,18 @@ model usuario {
   rol          String?    @default("usuario") @db.VarChar(50)
   verificado   Boolean?   @default(false)
   ubicacion_id Int?
-  carrito      carrito?
   ordenes      ordenes[]
   ubicacion    ubicacion? @relation(fields: [ubicacion_id], references: [id_ubicacion], onUpdate: NoAction)
 }
 
 model ordenes {
-  id_orden   Int      @id @default(autoincrement())
+  id_orden   Int       @id @default(autoincrement())
   id_usuario Int
-  fecha      DateTime @default(now())
-  estado     String   @db.VarChar(50)
-  total      Decimal  @db.Decimal(10, 2)
-  skins_ids  Int[]
-  usuario    usuario  @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
+  fecha      DateTime? @default(now()) @db.Timestamp(6)
+  estado     String    @db.VarChar(50)
+  total      Decimal   @db.Decimal(10, 2)
+  skins_ids  Int[]     @default([])
+  usuario    usuario   @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade, onUpdate: NoAction, map: "fk_usuario_orden")
 }
 
 enum tipo_categoria_arma {
