@@ -26,12 +26,12 @@
         <td style="min-width:100px">{{carrito_producto.cantidad}}</td>
         <td style="min-width:120px; text-align:center;">
           <p-button icon="pi pi-plus" styleClass="p-button-success"
-            (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin)">+
+            (onClick)="onAumentarCantidad(carrito_producto.skin.id_skin)">+
           </p-button>
         </td>
         <td style="min-width:140px; text-align:center;">
           <p-button icon="pi pi-minus" styleClass="p-button-danger"
-            (onClick)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin)">-
+            (onClick)="onEliminarProducto(carrito_producto.skin.id_skin)">-
           </p-button>
         </td>
       </tr>
@@ -68,11 +68,11 @@
 
     <div style="display:flex; gap:0.5rem;">
       <p-button icon="pi pi-plus" styleClass="p-button-success" [style]="{'flex': '1'}"
-        (onClick)="aumentarCantidadDeProductoAlCarrito(carrito_producto.skin.id_skin!)">+
+        (onClick)="onAumentarCantidad(carrito_producto.skin.id_skin!)">+
       </p-button>
 
       <p-button icon="pi pi-minus" styleClass="p-button-danger" [style]="{'flex': '1'}"
-        (click)="eliminarProductoDelCarrito(carrito_producto.skin.id_skin!)">-
+        (click)="onEliminarProducto(carrito_producto.skin.id_skin!)">-
       </p-button>
     </div>
   </div>
@@ -85,11 +85,11 @@
 
   <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
     <p-button *ngIf="productos.length > 0" label="Vaciar Carrito" styleClass="p-button-danger"
-      (click)="vaciarCarritoConfirmacion()">
+      (click)="abrirModalVaciar()">
     </p-button>
 
     <p-button *ngIf="productos.length > 0" label="Pagar" styleClass="p-button-success"
-      (click)="pagarCarritoConfirmacion()">
+      (click)="abrirModalPagar()">
     </p-button>
   </div>
 
@@ -102,7 +102,7 @@
   [style]="{width:'300px'}">
   <p>¿Estás seguro que deseas vaciar el carrito?</p>
   <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
-    <button pButton label="Sí" style="min-width:70px;" (click)="vaciarCarrito()"></button>
+    <button pButton label="Sí" style="min-width:70px;" (click)="onVaciarCarrito()"></button>
     <button pButton label="No" style="min-width:70px;" (click)="mostrarModalVaciar=false"></button>
   </div>
 </p-dialog>
@@ -115,7 +115,7 @@
     <p>¿Confirmas el pago del carrito?</p>
     <h3>$Total: {{ totalCarrito }}</h3>
     <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem;">
-      <button pButton label="Sí" style="min-width:70px;" (click)="pagarCarrito()"></button>
+      <button pButton label="Sí" style="min-width:70px;" (click)="onPagarCarrito()"></button>
       <button pButton label="No" style="min-width:70px;" (click)="mostrarModalPagar=false"></button>
     </div>
   </ng-container>
