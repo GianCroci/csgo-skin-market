@@ -66,15 +66,16 @@
 
     <div style="margin-bottom:0.5rem;">Cantidad: {{ carrito_producto.cantidad }} </div>
 
-    <div style="display:flex; gap:0.5rem;">
-      <p-button icon="pi pi-plus" styleClass="p-button-success" [style]="{'flex': '1'}"
-        (onClick)="onAumentarCantidad(carrito_producto.skin.id_skin!)">+
-      </p-button>
+        <div style="display:flex; gap:0.5rem; margin-top: 7rem;">
+          <p-button icon="pi pi-plus" styleClass="p-button-success" [style]="{'flex': '1'}"
+            (onClick)="onAumentarCantidad(carrito_producto.skin.id_skin!)">+
+          </p-button>
 
-      <p-button icon="pi pi-minus" styleClass="p-button-danger" [style]="{'flex': '1'}"
-        (click)="onEliminarProducto(carrito_producto.skin.id_skin!)">-
-      </p-button>
-    </div>
+          <p-button icon="pi pi-minus" styleClass="p-button-danger" [style]="{'flex': '1'}"
+            (click)="onEliminarProducto(carrito_producto.skin.id_skin!)">-
+          </p-button>
+        </div>
+
   </div>
 </div>
 
