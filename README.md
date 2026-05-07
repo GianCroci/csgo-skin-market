@@ -114,13 +114,6 @@ El proyecto sigue una arquitectura **cliente-servidor desacoplada**:
 
 ---
 
-## 👥 Integrantes
-
-Proyecto grupal — Taller Web 2, UNLaM.
-
-- [Gian Croci](https://github.com/GianCroci)
-
----
 
 ## 📄 Licencia
 
